@@ -4,6 +4,11 @@ export const Container = styled('main', {
   display: 'flex',
   alignItems: 'center',
   overflow: 'hidden',
+  height: '100vh',
+
+  '@media (max-width: 1024px)': {
+    justifyContent: 'center',
+  },
 })
 
 export const ImageContainer = styled('div', {
@@ -16,6 +21,10 @@ export const ImageContainer = styled('div', {
     width: 'auto',
     borderRadius: '$md',
   },
+
+  '@media (max-width: 1024px)': {
+    display: 'none',
+  },
 })
 
 export const LoginMethods = styled('div', {
@@ -23,6 +32,7 @@ export const LoginMethods = styled('div', {
   flexDirection: 'column',
   gap: '2.5rem',
   margin: '0 auto',
+  width: 372,
 })
 
 export const MethodsInfo = styled('div', {
@@ -52,7 +62,6 @@ export const MethodItem = styled('button', {
   padding: '1.25rem 1.5rem',
   background: '$gray600',
   borderRadius: '$sm',
-  width: '100%',
   cursor: 'pointer',
   transition: 'all 0.2s ease-in-out',
 
