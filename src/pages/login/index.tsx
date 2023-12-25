@@ -15,6 +15,7 @@ import logoVisitante from '@/assets/logos/logo-visitante.svg'
 
 import { useRouter } from 'next/router'
 import { signIn } from 'next-auth/react'
+import { useEffect } from 'react'
 
 type AuthProps = {
   callbackUrl?: string
@@ -23,6 +24,8 @@ type AuthProps = {
 
 export default function Login() {
   const router = useRouter()
+
+  const user = false
 
   function handleSignIn({ provider, callbackUrl = '/' }: AuthProps) {
     if (!provider) {
@@ -33,6 +36,12 @@ export default function Login() {
       callbackUrl,
     })
   }
+
+  useEffect(() => {
+    if (user) {
+      router.push('/home')
+    }
+  }, [router, user])
 
   return (
     <Container>

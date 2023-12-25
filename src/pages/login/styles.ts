@@ -8,6 +8,7 @@ export const Container = styled('main', {
 
   '@media (max-width: 1024px)': {
     justifyContent: 'center',
+    padding: '0 2rem',
   },
 })
 
@@ -74,5 +75,11 @@ export const MethodItem = styled('button', {
     fontWeight: '$bold',
     lineHeight: '$base',
     color: '$gray200',
+  },
+
+  '@media (max-width: 1024px)': {
+    span: {
+      fontSize: '$md',
+    },
   },
 })

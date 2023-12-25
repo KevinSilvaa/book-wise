@@ -80,9 +80,8 @@ export const LoginInfo = styled('button', {
   },
 
   img: {
-    border: '1px solid',
-    borderColor: '$gradient-vertical',
     borderRadius: '$full',
+    border: '1px solid $green100',
   },
 
   span: {
