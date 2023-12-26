@@ -1,3 +1,4 @@
+// Styling Imports
 import {
   Container,
   ImageContainer,
@@ -6,16 +7,18 @@ import {
   MethodItem,
   MethodsButtons,
 } from './styles'
-import Image from 'next/image'
 
+// Strategic Imports
+import Image from 'next/image'
+import { useRouter } from 'next/router'
+import { signIn } from 'next-auth/react'
+import { useEffect } from 'react'
+
+// Image Imports
 import backgroundImageLogin from '@/assets/login-image.png'
 import logoGoogle from '@/assets/logos/logo-google.svg'
 import logoGithub from '@/assets/logos/logo-github.svg'
 import logoVisitante from '@/assets/logos/logo-visitante.svg'
-
-import { useRouter } from 'next/router'
-import { signIn } from 'next-auth/react'
-import { useEffect } from 'react'
 
 type AuthProps = {
   callbackUrl?: string

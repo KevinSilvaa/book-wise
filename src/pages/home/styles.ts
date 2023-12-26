@@ -81,6 +81,7 @@ export const RecommendBookCard = styled('div', {
   display: 'flex',
   gap: '1.5rem',
   border: '2px solid $gray600',
+  cursor: 'pointer',
   transition: 'all 0.3s ease-out',
 
   '&:hover': {
@@ -163,95 +164,13 @@ export const FeedbackSectionContent = styled('div', {
   gap: '0.75rem',
 })
 
-export const RecentReviewCard = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '2rem',
-  padding: '1.5rem',
-  background: '$gray700',
-  borderRadius: '$sm',
-})
-
-export const RecentReviewCardHeader = styled('div', {
-  display: 'flex',
-  justifyContent: 'space-between',
-})
-
-export const UserInfos = styled('div', {
-  display: 'flex',
-  gap: '1rem',
-
-  img: {
-    borderRadius: '$full',
-    border: '1px solid $green100',
-  },
-
-  div: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    lineHeight: '$base',
-
-    a: {
-      color: '$gray100',
-      textDecoration: 'none',
-      cursor: 'pointer',
-      transition: 'all 0.3s ease-out',
-
-      '&:hover': {
-        color: '$purple100',
-      },
-    },
-
-    time: {
-      color: '$gray400',
-      fontSize: '$sm',
-    },
-  },
-})
-
-export const RecentReviewCardContent = styled('div', {
-  display: 'flex',
-  gap: '1.25rem',
-  cursor: 'pointer',
-})
-
-export const BookReview = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '1.25rem',
-
-  p: {
-    color: '$gray300',
-    fontSize: '$sm',
-    lineHeight: '$base',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    display: '-webkit-box',
-    '-webkit-line-clamp': 4,
-    '-webkit-box-orient': 'vertical',
-  },
-})
-
-export const BookTitle = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-
-  strong: {
-    color: '$gray100',
-    lineHeight: '$short',
-  },
-
-  span: {
-    color: '$gray400',
-    fontSize: '$sm',
-    lineHeight: '$base',
-  },
-})
-
 export const HomeSideContent = styled('div', {})
 
-export const PopularBooksSection = styled('section', {})
+export const PopularBooksSection = styled('section', {
+  display: 'flex',
+  flexFlow: 'column',
+  gap: '1rem',
+})
 
 export const PopularBooksHeader = styled('div', {
   display: 'flex',
@@ -287,4 +206,8 @@ export const PopularBooksHeader = styled('div', {
   },
 })
 
-export const PopularBookCard = styled('div', {})
+export const PopularBooksContent = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1rem',
+})

@@ -1,8 +1,4 @@
-import { DefaultLayout } from '@/layouts/DefaultLayout'
-import { ReactElement } from 'react'
-import { NextPageWithLayout } from '../_app.page'
-import Link from 'next/link'
-import { CaretRight, ChartLineUp, Star } from 'phosphor-react'
+// Styling Imports
 import {
   FeedbacksSection,
   FeedbacksSectionHeader,
@@ -12,7 +8,6 @@ import {
   HomeContent,
   MainContent,
   HomeSideContent,
-  PopularBookCard,
   PopularBooksHeader,
   PopularBooksSection,
   RecommendBookCardDetails,
@@ -23,25 +18,28 @@ import {
   BookInfos,
   BookRating,
   BookSummary,
-  RecentReviewCard,
-  RecentReviewCardHeader,
-  RecentReviewCardContent,
-  UserInfos,
-  BookReview,
-  BookTitle,
+  PopularBooksContent,
 } from './styles'
+
+// Components Imports
+import { ReviewCard } from '@/components/BookReviewCard'
+import { PopularBookCard } from '@/components/PopularBookCard'
+
+// Strategic Imports
+import { DefaultLayout } from '@/layouts/DefaultLayout'
+import { ReactElement } from 'react'
+import { NextPageWithLayout } from '../_app.page'
 import Image from 'next/image'
+import Link from 'next/link'
+
+// Icons Imports
+import { CaretRight, ChartLineUp, Star } from 'phosphor-react'
+
+// Image Imports
 import bookImage from '@/assets/entendendo-algoritmos.png'
-import cardBookImage from '@/assets/o-hobbit.png'
-import { useRouter } from 'next/router'
 
 const Home: NextPageWithLayout = () => {
   const user = true
-  const router = useRouter()
-
-  function handleNavigateToReview() {
-    router.push(`/review/iasdiashjdioas213sadoa`)
-  }
 
   return (
     <HomeContainer>
@@ -100,93 +98,10 @@ const Home: NextPageWithLayout = () => {
             </FeedbacksSectionHeader>
 
             <FeedbackSectionContent>
-              <RecentReviewCard>
-                <RecentReviewCardHeader>
-                  <UserInfos>
-                    <Image
-                      src="https://github.com/KevinSilvaa.png"
-                      alt=""
-                      width={40}
-                      height={40}
-                    />
-
-                    <div>
-                      <Link href={`/profile/jaxsondias`}>Jaxson Dias</Link>
-                      <time title="25/12/2023">Hoje</time>
-                    </div>
-                  </UserInfos>
-
-                  <BookRating>
-                    <Star weight="fill" />
-                    <Star weight="fill" />
-                    <Star weight="fill" />
-                    <Star weight="fill" />
-                    <Star />
-                  </BookRating>
-                </RecentReviewCardHeader>
-
-                <RecentReviewCardContent onClick={handleNavigateToReview}>
-                  <Image src={cardBookImage} alt="" width={108} height={152} />
-
-                  <BookReview>
-                    <BookTitle>
-                      <strong>O Hobbit</strong>
-                      <span>J.R.R. Tolkien</span>
-                    </BookTitle>
-
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Sapiente nemo mollitia ipsam, numquam tempora cumque
-                      molestias expedita ex sit suscipit rerum dolorum placeat
-                      a. Dicta accusantium voluptas et dolores neque.
-                    </p>
-                  </BookReview>
-                </RecentReviewCardContent>
-              </RecentReviewCard>
-
-              <RecentReviewCard>
-                <RecentReviewCardHeader>
-                  <UserInfos>
-                    <Image
-                      src="https://github.com/KevinSilvaa.png"
-                      alt=""
-                      width={40}
-                      height={40}
-                    />
-
-                    <div>
-                      <Link href={`/profile/jaxsondias`}>Jaxson Dias</Link>
-                      <time title="25/12/2023">Hoje</time>
-                    </div>
-                  </UserInfos>
-
-                  <BookRating>
-                    <Star weight="fill" />
-                    <Star weight="fill" />
-                    <Star weight="fill" />
-                    <Star weight="fill" />
-                    <Star />
-                  </BookRating>
-                </RecentReviewCardHeader>
-
-                <RecentReviewCardContent onClick={handleNavigateToReview}>
-                  <Image src={cardBookImage} alt="" width={108} height={152} />
-
-                  <BookReview>
-                    <BookTitle>
-                      <strong>O Hobbit</strong>
-                      <span>J.R.R. Tolkien</span>
-                    </BookTitle>
-
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Sapiente nemo mollitia ipsam, numquam tempora cumque
-                      molestias expedita ex sit suscipit rerum dolorum placeat
-                      a. Dicta accusantium voluptas et dolores neque.
-                    </p>
-                  </BookReview>
-                </RecentReviewCardContent>
-              </RecentReviewCard>
+              <ReviewCard />
+              <ReviewCard />
+              <ReviewCard />
+              <ReviewCard />
             </FeedbackSectionContent>
           </FeedbacksSection>
         </MainContent>
@@ -202,7 +117,12 @@ const Home: NextPageWithLayout = () => {
               </Link>
             </PopularBooksHeader>
 
-            <PopularBookCard></PopularBookCard>
+            <PopularBooksContent>
+              <PopularBookCard />
+              <PopularBookCard />
+              <PopularBookCard />
+              <PopularBookCard />
+            </PopularBooksContent>
           </PopularBooksSection>
         </HomeSideContent>
       </HomeContent>

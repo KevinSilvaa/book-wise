@@ -1,4 +1,4 @@
-import Image from 'next/image'
+// Styling Imports
 import {
   SideBarContainer,
   SideBarContent,
@@ -7,10 +7,17 @@ import {
   NavbarItem,
   LoginInfo,
 } from './styles'
-import bookWiseLogo from '../../../public/logo.png'
-import { Binoculars, ChartLineUp, SignIn, SignOut, User } from 'phosphor-react'
+
+// Strategic Imports
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+
+// Icons Imports
+import { Binoculars, ChartLineUp, SignIn, SignOut, User } from 'phosphor-react'
+
+// Image Imports
+import bookWiseLogo from '../../../public/logo.png'
 
 export function SideBar() {
   const user = true
