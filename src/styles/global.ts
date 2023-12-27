@@ -17,5 +17,9 @@ export const globalStyles = globalCss({
     fontFamily: '$default',
     fontWeight: '$regular',
     fontSize: '$md',
+
+    '@media (max-width: 900px)': {
+      fontSize: '82.5%',
+    },
   },
 })

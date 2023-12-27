@@ -6,6 +6,38 @@ export const SideBarContainer = styled('aside', {
   maxWidth: 250,
   width: '100%',
   padding: '$5 0 $4 $5',
+  zIndex: 10,
+  opacity: 0,
+  overflow: 'hidden',
+  position: 'absolute',
+  transform: 'translateX(-100%)',
+  transition: 'all 0.5s ease-in-out',
+
+  variants: {
+    open: {
+      true: {
+        position: 'fixed',
+        padding: '0 $4 0 0',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        opacity: 1,
+        transform: 'translateX(0)',
+
+        '@media (min-width: 530px)': {
+          maxWidth: 300,
+        },
+      },
+    },
+  },
+
+  '@media (min-width: 900px)': {
+    transform: 'translateX(0)',
+    opacity: 1,
+    maxWidth: 250,
+    position: 'initial',
+    overflow: 'visible',
+  },
 })
 
 export const SideBarContent = styled('div', {
@@ -16,6 +48,15 @@ export const SideBarContent = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   gap: '$8',
+
+  '@media (min-width: 530px)': {
+    backgroundSize: 'cover',
+  },
+
+  '@media (max-width: 900px)': {
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
+  },
 })
 
 export const ContentHeader = styled('div', {

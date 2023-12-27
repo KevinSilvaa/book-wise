@@ -20,7 +20,11 @@ import { Binoculars, ChartLineUp, SignIn, SignOut, User } from 'phosphor-react'
 // Image Imports
 import bookWiseLogo from '../../../public/images/logo.png'
 
-export function SideBar() {
+type SideBarProps = {
+  open?: boolean
+}
+
+export function SideBar({ open }: SideBarProps) {
   const session = useSession()
 
   const userIsAuthenticated = session.status === 'authenticated'
@@ -34,7 +38,7 @@ export function SideBar() {
   }
 
   return (
-    <SideBarContainer>
+    <SideBarContainer open={open}>
       <SideBarContent>
         <ContentHeader>
           <Link href="/home">

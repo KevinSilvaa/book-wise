@@ -4,6 +4,8 @@ export const HomeContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   gap: '2.5rem',
+  paddingBottom: '5.25rem',
+  marginTop: '2rem',
 })
 
 export const HomeHeader = styled('div', {
@@ -27,6 +29,10 @@ export const HomeContent = styled('section', {
   display: 'grid',
   gridTemplateColumns: '1fr 324px',
   gap: '4rem',
+
+  '@media (max-width: 1250px)': {
+    gridTemplateColumns: '1fr',
+  },
 })
 
 export const MainContent = styled('div', {
@@ -34,7 +40,11 @@ export const MainContent = styled('div', {
   flexDirection: 'column',
   gap: '2.5rem',
   maxWidth: 608,
-  paddingBottom: '5.25rem',
+
+  '@media (max-width: 1250px)': {
+    maxWidth: '100%',
+    paddingBottom: 0,
+  },
 })
 
 export const UserRecommendedBooks = styled('section', {
@@ -86,6 +96,14 @@ export const RecommendBookCard = styled('div', {
 
   '&:hover': {
     borderColor: '$gray500',
+  },
+
+  '@media (max-width: 550px)': {
+    img: {
+      width: 72,
+      height: 'auto',
+      objectFit: 'cover',
+    },
   },
 })
 
@@ -162,13 +180,20 @@ export const FeedbackSectionContent = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   gap: '0.75rem',
+
+  '@media (max-width: 530px)': {
+    gap: '1.5rem',
+  },
 })
 
-export const HomeSideContent = styled('div', {})
+export const HomeSideContent = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+})
 
 export const PopularBooksSection = styled('section', {
   display: 'flex',
-  flexFlow: 'column',
+  flexDirection: 'column',
   gap: '1rem',
 })
 
@@ -207,7 +232,15 @@ export const PopularBooksHeader = styled('div', {
 })
 
 export const PopularBooksContent = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
+  display: 'grid',
+  gridTemplateColumns: '1fr',
   gap: '1rem',
+
+  '@media (max-width: 1250px)': {
+    gridTemplateColumns: 'repeat(2, 1fr)',
+  },
+
+  '@media (max-width: 550px)': {
+    gridTemplateColumns: '1fr',
+  },
 })
