@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 // Styling Imports
 import {
   BookReview,
@@ -9,18 +10,23 @@ import {
 } from './styles'
 import { BookRating } from '@/pages/home/styles'
 
+// Components Imports
+import { Rating as StarRatings } from '@/components/Rating'
+
 // Strategic Imports
 import { useRouter } from 'next/router'
 import Image from 'next/image'
-import Link from 'next/link'
-
-// Icon Imports
-import { Star } from 'phosphor-react'
 
 // Image Imports
-import cardBookImage from '@/assets/o-hobbit.png'
+import { RatingWithAuthorAndBook } from '@/pages/home/index.page'
+import dayjs from '@/lib/dayjs'
+import { DateFormatter } from '@/utils/formatter'
 
-export function ReviewCard() {
+interface ReviewCardProps {
+  rating: RatingWithAuthorAndBook
+}
+
+export function ReviewCard({ rating }: ReviewCardProps) {
   const router = useRouter()
 
   function handleNavigateToReview() {
@@ -30,44 +36,32 @@ export function ReviewCard() {
   return (
     <RecentReviewCard>
       <RecentReviewCardHeader>
-        <UserInfos>
-          <Image
-            src="https://github.com/KevinSilvaa.png"
-            alt=""
-            width={40}
-            height={40}
-          />
+        <UserInfos href={`/profile/${rating.user_id}`}>
+          <Image src={rating.user.avatar_url!} alt="" width={40} height={40} />
 
           <div>
-            <Link href={`/profile/jaxsondias`}>Jaxson Dias</Link>
-            <time title="25/12/2023">Hoje</time>
+            <strong>{rating.user.name}</strong>
+            <time title={DateFormatter.format(new Date(rating.created_at))}>
+              {dayjs(rating.created_at).fromNow()}
+            </time>
           </div>
         </UserInfos>
 
         <BookRating>
-          <Star weight="fill" />
-          <Star weight="fill" />
-          <Star weight="fill" />
-          <Star weight="fill" />
-          <Star />
+          <StarRatings rating={rating.rate} starSize={16} />
         </BookRating>
       </RecentReviewCardHeader>
 
       <RecentReviewCardContent onClick={handleNavigateToReview}>
-        <Image src={cardBookImage} alt="" width={108} height={152} />
+        <Image src={rating.book.cover_url} alt="" width={108} height={152} />
 
         <BookReview>
           <BookTitle>
-            <strong>O Hobbit</strong>
-            <span>J.R.R. Tolkien</span>
+            <strong>{rating.book.name}</strong>
+            <span>{rating.book.author}</span>
           </BookTitle>
 
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente
-            nemo mollitia ipsam, numquam tempora cumque molestias expedita ex
-            sit suscipit rerum dolorum placeat a. Dicta accusantium voluptas et
-            dolores neque.
-          </p>
+          <p>{rating.book.summary}</p>
         </BookReview>
       </RecentReviewCardContent>
     </RecentReviewCard>

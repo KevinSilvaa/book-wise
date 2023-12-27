@@ -1,13 +1,15 @@
 // Styling Imports
 import { CardContent, CardTitle, CardContainer } from './styles'
+import { BookRating } from '@/pages/home/styles'
 
 // Strategic Imports
 import Image from 'next/image'
 
-// Image Imports
-import bookCardImage from '@/assets/Book.png'
-import { BookRating } from '@/pages/home/styles'
+// Icons Imports
 import { Star } from 'phosphor-react'
+
+// Image Imports
+import bookCardImage from '../../../public/images/books/a-revolucao-dos-bichos.png'
 
 export function PopularBookCard() {
   return (

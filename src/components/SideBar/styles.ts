@@ -10,7 +10,7 @@ export const SideBarContainer = styled('aside', {
 
 export const SideBarContent = styled('div', {
   height: '100%',
-  backgroundImage: 'url(/sidebar-background.png)',
+  backgroundImage: 'url(/images/sidebar-background.png)',
   padding: '2.5rem 2rem 1.5rem',
   borderRadius: '$xmd',
   display: 'flex',

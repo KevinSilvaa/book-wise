@@ -24,6 +24,38 @@ export const ProfileHeader = styled('div', {
     fontSize: '$2xl',
     lineHeight: '$short',
   },
+
+  variants: {
+    isOwnProfile: {
+      true: {
+        button: {
+          all: 'unset',
+          padding: '0.25rem 0.5rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.75rem',
+          cursor: 'pointer',
+          borderRadius: 4,
+          transition: 'all 0.3s ease-out',
+
+          '&:hover': {
+            backgroundColor: 'rgba(230, 232, 242, 0.04)',
+          },
+
+          svg: {
+            color: '$gray200',
+          },
+
+          span: {
+            fontSize: '$md',
+            fontWeight: '$bold',
+            lineHeight: '$base',
+            color: '$gray200',
+          },
+        },
+      },
+    },
+  },
 })
 
 export const ProfileContent = styled('section', {

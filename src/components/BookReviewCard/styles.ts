@@ -1,4 +1,5 @@
 import { styled } from '@/styles/stitches.config'
+import Link from 'next/link'
 
 export const RecentReviewCard = styled('div', {
   display: 'flex',
@@ -14,13 +15,15 @@ export const RecentReviewCardHeader = styled('div', {
   justifyContent: 'space-between',
 })
 
-export const UserInfos = styled('div', {
+export const UserInfos = styled(Link, {
   display: 'flex',
   gap: '1rem',
+  textDecoration: 'none',
 
   img: {
     borderRadius: '$full',
     border: '1px solid $green100',
+    objectFit: 'cover',
   },
 
   div: {
@@ -29,7 +32,7 @@ export const UserInfos = styled('div', {
     justifyContent: 'center',
     lineHeight: '$base',
 
-    a: {
+    strong: {
       color: '$gray100',
       textDecoration: 'none',
       cursor: 'pointer',

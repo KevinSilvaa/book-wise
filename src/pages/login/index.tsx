@@ -11,14 +11,17 @@ import {
 // Strategic Imports
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { signIn } from 'next-auth/react'
-import { useEffect } from 'react'
+import { getSession, signIn } from 'next-auth/react'
+import { GetServerSideProps } from 'next'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '../api/auth/[...nextauth].api'
 
 // Image Imports
-import backgroundImageLogin from '@/assets/login-image.png'
+import backgroundImageLogin from '../../../public/images/login-image.png'
 import logoGoogle from '@/assets/logos/logo-google.svg'
 import logoGithub from '@/assets/logos/logo-github.svg'
 import logoVisitante from '@/assets/logos/logo-visitante.svg'
+import { useEffect } from 'react'
 
 type AuthProps = {
   callbackUrl?: string
@@ -27,8 +30,6 @@ type AuthProps = {
 
 export default function Login() {
   const router = useRouter()
-
-  const user = false
 
   function handleSignIn({ provider, callbackUrl = '/' }: AuthProps) {
     if (!provider) {
@@ -41,10 +42,15 @@ export default function Login() {
   }
 
   useEffect(() => {
-    if (user) {
-      router.push('/home')
+    async function isUserAuthenticated() {
+      const session = await getSession()
+      if (session) {
+        router.push('/home')
+      }
     }
-  }, [router, user])
+
+    isUserAuthenticated()
+  }, [router])
 
   return (
     <Container>
@@ -92,4 +98,23 @@ export default function Login() {
       </LoginMethods>
     </Container>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await getServerSession(req, res, authOptions)
+
+  if (session) {
+    return {
+      redirect: {
+        destination: '/home',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {
+      session,
+    },
+  }
 }

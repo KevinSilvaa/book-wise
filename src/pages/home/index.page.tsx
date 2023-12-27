@@ -31,15 +31,34 @@ import { ReactElement } from 'react'
 import { NextPageWithLayout } from '../_app.page'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useQuery } from '@tanstack/react-query'
+import { useSession } from 'next-auth/react'
+import { Book, Rating, User } from '@prisma/client'
 
 // Icons Imports
 import { CaretRight, ChartLineUp, Star } from 'phosphor-react'
 
 // Image Imports
-import bookImage from '@/assets/entendendo-algoritmos.png'
+import bookImage from '../../../public/images/books/a-revolucao-dos-bichos.png'
+import { api } from '@/lib/axios'
+
+export interface RatingWithAuthorAndBook extends Rating {
+  user: User
+  book: Book
+}
 
 const Home: NextPageWithLayout = () => {
-  const user = true
+  const session = useSession()
+
+  const userIsAuthenticated = session.status === 'authenticated'
+
+  const { data: ratings } = useQuery<RatingWithAuthorAndBook[]>({
+    queryKey: ['latestRatings'],
+    queryFn: async () => {
+      const { data } = await api.get('/ratings/latest')
+      return data.ratings
+    },
+  })
 
   return (
     <HomeContainer>
@@ -50,7 +69,7 @@ const Home: NextPageWithLayout = () => {
 
       <HomeContent>
         <MainContent>
-          {user ? (
+          {userIsAuthenticated ? (
             <UserRecommendedBooks>
               <UserRecommendedBooksHeader>
                 <h3>Sua última leitura</h3>
@@ -98,10 +117,9 @@ const Home: NextPageWithLayout = () => {
             </FeedbacksSectionHeader>
 
             <FeedbackSectionContent>
-              <ReviewCard />
-              <ReviewCard />
-              <ReviewCard />
-              <ReviewCard />
+              {ratings?.map((rating) => (
+                <ReviewCard key={rating.id} rating={rating} />
+              ))}
             </FeedbackSectionContent>
           </FeedbacksSection>
         </MainContent>

@@ -10,30 +10,31 @@ import {
   UserProfileTextInformations,
 } from './styles'
 import { BookOpen, BookmarkSimple, Books, UserList } from 'phosphor-react'
-
-// Strategic Imports
-
-// Icons Imports
+import { UserProfileProps } from '@/pages/profile/[user_id]/index.page'
 
 // Image Imports
+import avatarPlaceholder from '@/assets/logos/logo-visitante.svg'
 
-type UserProps = {
-  user: {
-    name: string
-    id: string
-    avatarUrl: string
-  }
+interface UserProfileStatisticsProps {
+  profile: UserProfileProps
 }
 
-export function UserProfile({ user }: UserProps) {
+export function UserProfile({ profile }: UserProfileStatisticsProps) {
+  const yearThatUserIsCreated = new Date(profile?.user.created_at).getFullYear()
+
   return (
     <UserProfileContainer>
       <UserProfileInfos>
-        <Image src={user.avatarUrl} alt="" width={72} height={72} />
+        <Image
+          src={profile?.user.avatar_url || avatarPlaceholder}
+          alt=""
+          width={72}
+          height={72}
+        />
 
         <UserProfileTextInformations>
-          <strong>{user.name}</strong>
-          <span>Membro desde 2019</span>
+          <strong>{profile?.user.name}</strong>
+          <span>Membro desde {yearThatUserIsCreated}</span>
         </UserProfileTextInformations>
       </UserProfileInfos>
 
@@ -53,7 +54,7 @@ export function UserProfile({ user }: UserProps) {
           <Books size={32} />
 
           <ItemInfos>
-            <strong>10</strong>
+            <strong>{profile?.ratings.length}</strong>
             <span>Livros avaliados</span>
           </ItemInfos>
         </UserProfileItem>

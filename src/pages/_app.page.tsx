@@ -1,5 +1,7 @@
 /* eslint-disable camelcase */
+import { queryClient } from '@/lib/react-query'
 import { globalStyles } from '@/styles/global'
+import { QueryClientProvider } from '@tanstack/react-query'
 import { NextPage } from 'next'
 import { SessionProvider } from 'next-auth/react'
 import { DefaultSeo } from 'next-seo'
@@ -15,7 +17,7 @@ const nunitoSans = Nunito_Sans({
   weight: ['400', '700'],
 })
 
-export type NextPageWithLayout<Page = object, InterfacePage = Page> = NextPage<
+export type NextPageWithLayout<Page = {}, InterfacePage = Page> = NextPage<
   Page,
   InterfacePage
 > & {
@@ -33,19 +35,21 @@ export default function App({
   const getLayout = Component.getLayout ?? ((page) => page)
 
   return (
-    <SessionProvider session={session}>
-      <DefaultSeo
-        openGraph={{
-          type: 'website',
-          locale: 'pt_BR',
-          url: 'http://localhost:3000',
-          siteName: 'Book Wise',
-        }}
-      />
+    <QueryClientProvider client={queryClient}>
+      <SessionProvider session={session}>
+        <DefaultSeo
+          openGraph={{
+            type: 'website',
+            locale: 'pt_BR',
+            url: 'http://localhost:3000',
+            siteName: 'Book Wise',
+          }}
+        />
 
-      <div className={nunitoSans.style.fontFamily}>
-        {getLayout(<Component {...pageProps} />)}
-      </div>
-    </SessionProvider>
+        <div className={nunitoSans.style.fontFamily}>
+          {getLayout(<Component {...pageProps} />)}
+        </div>
+      </SessionProvider>
+    </QueryClientProvider>
   )
 }

@@ -12,21 +12,25 @@ import {
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { signOut, useSession } from 'next-auth/react'
 
 // Icons Imports
 import { Binoculars, ChartLineUp, SignIn, SignOut, User } from 'phosphor-react'
 
 // Image Imports
-import bookWiseLogo from '../../../public/logo.png'
+import bookWiseLogo from '../../../public/images/logo.png'
 
 export function SideBar() {
-  const user = true
+  const session = useSession()
+
+  const userIsAuthenticated = session.status === 'authenticated'
+
   const router = useRouter()
 
   const currentPage = router.pathname
 
-  const userData = {
-    id: 1,
+  async function handleLogout() {
+    signOut({ callbackUrl: '/' })
   }
 
   return (
@@ -49,9 +53,9 @@ export function SideBar() {
             Explorar
           </NavbarItem>
 
-          {user ? (
+          {userIsAuthenticated ? (
             <NavbarItem
-              href={`/profile/${userData.id}`}
+              href={`/profile/${session.data.user.id}`}
               active={currentPage.includes('profile')}
             >
               <User size={24} />
@@ -59,19 +63,19 @@ export function SideBar() {
             </NavbarItem>
           ) : null}
 
-          {user ? (
-            <LoginInfo onClick={() => console.log('Deslogar')} userIsLogged>
+          {userIsAuthenticated ? (
+            <LoginInfo onClick={handleLogout} userIsLogged>
               <Image
-                src="https://github.com/KevinSilvaa.png"
+                src={session.data.user.avatar_url}
                 alt=""
                 width={32}
                 height={32}
               />
-              <span>Kevin Silva</span>
+              <span>{session.data.user.name}</span>
               <SignOut size={20} />
             </LoginInfo>
           ) : (
-            <LoginInfo onClick={() => console.log('Logar')}>
+            <LoginInfo onClick={() => console.log('colocar modal aqui')}>
               <span>Fazer login</span>
               <SignIn size={20} />
             </LoginInfo>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 // Styling Imports
 import {
   BooksReviewContent,
@@ -11,6 +12,10 @@ import {
 // Components Imports
 import { SearchBar } from '@/components/SearchBar'
 import { UserProfile } from '@/components/UserProfile'
+import {
+  ProfileReviewCard,
+  UserProfileRatingsProps,
+} from '@/components/ProfileReviewCard'
 
 // Strategic Imports
 import { DefaultLayout } from '@/layouts/DefaultLayout'
@@ -18,26 +23,69 @@ import { NextPageWithLayout } from '@/pages/_app.page'
 import { ChangeEvent, ReactElement, useState } from 'react'
 
 // Icons Imports
-import { User } from 'phosphor-react'
-import { ProfileReviewCard } from '@/components/ProfileReviewCard'
+import { CaretLeft, User } from 'phosphor-react'
+import { useRouter } from 'next/router'
+import { useQuery } from '@tanstack/react-query'
+import { api } from '@/lib/axios'
+import { useSession } from 'next-auth/react'
 
-// Image Imports
+export type UserProfileProps = {
+  ratings: UserProfileRatingsProps[]
+  user: {
+    avatar_url: string
+    name: string
+    created_at: Date
+  }
+  readPages: number
+  ratedBooks: number
+  readAuthors: number
+  mostReadCategory?: string
+}
 
 const Profile: NextPageWithLayout = () => {
   const [search, setSearch] = useState('')
 
-  const userTeste = {
-    name: 'Kevin',
-    id: 'ashjodao313',
-    avatarUrl: 'https://github.com/KevinSilvaa.png',
+  const session = useSession()
+  const router = useRouter()
+  const userId = String(router.query.user_id)
+
+  const isOwnProfile = session.data?.user.id === userId
+
+  function handleNavigateBack() {
+    router.back()
   }
+
+  const { data: userProfile } = useQuery<UserProfileProps>({
+    queryKey: ['userProfile', userId],
+    queryFn: async () => {
+      const { data } = await api.get(`profile/${userId}`)
+      return data?.profile ?? {}
+    },
+    enabled: !!userId,
+  })
+
+  const filteredRatings = userProfile?.ratings?.filter((rating) => {
+    return (
+      rating.book.name.toLowerCase().includes(search.toLowerCase()) ||
+      rating.book.author.includes(search.toLowerCase())
+    )
+  })
 
   return (
     <ProfileContainer>
-      <ProfileHeader>
-        <User size={32} />
-        <h1>Perfil</h1>
-      </ProfileHeader>
+      {isOwnProfile ? (
+        <ProfileHeader>
+          <User size={32} />
+          <h1>Perfil</h1>
+        </ProfileHeader>
+      ) : (
+        <ProfileHeader isOwnProfile>
+          <button onClick={handleNavigateBack}>
+            <CaretLeft size={20} />
+            <span>Voltar</span>
+          </button>
+        </ProfileHeader>
+      )}
 
       <ProfileContent>
         <MainContent>
@@ -50,14 +98,24 @@ const Profile: NextPageWithLayout = () => {
           />
 
           <BooksReviewContent>
-            <ProfileReviewCard />
-            <ProfileReviewCard />
-            <ProfileReviewCard />
+            {filteredRatings?.map((rating) => (
+              <ProfileReviewCard
+                key={`${userProfile?.user.name}-${rating.book.id}`}
+                rating={rating}
+              />
+            ))}
+            {filteredRatings?.length === 0 && (
+              <h3>
+                {search
+                  ? 'Nenhum resultado encontrado'
+                  : 'Nenhuma avaliação deste usuário foi encontrada'}
+              </h3>
+            )}
           </BooksReviewContent>
         </MainContent>
 
         <ProfileInfo>
-          <UserProfile user={userTeste} />
+          <UserProfile profile={userProfile!} />
         </ProfileInfo>
       </ProfileContent>
     </ProfileContainer>

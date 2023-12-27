@@ -46,4 +46,19 @@ export const BookRating = styled('div', {
   color: '$purple100',
 })
 
-export const ProfileCardTitle = styled('div', {})
+export const ProfileCardTitle = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+
+  strong: {
+    fontSize: '$lg',
+    color: '$gray100',
+    lineHeight: '$short',
+  },
+
+  span: {
+    fontSize: '$sm',
+    color: '$gray400',
+    lineHeight: '$base',
+  },
+})
