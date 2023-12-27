@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma'
+import { getMostReadCategory } from '@/utils/getMostReadCategory'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(
@@ -33,6 +34,29 @@ export default async function handler(
     },
   })
 
+  const totalPagesRead = profile?.ratings.reduce(
+    (acc, currentRating) => acc + currentRating.book.total_pages,
+    0,
+  )
+
+  const totalBooksRated = profile?.ratings.length
+
+  const totalAuthorsRead = profile?.ratings.reduce((acc, currentRating) => {
+    if (!acc.includes(currentRating.book.author)) {
+      acc.push(currentRating.book.author)
+    }
+
+    return acc
+  }, [] as string[])
+
+  const categories = profile?.ratings.flatMap((rating) =>
+    rating.book.categories.flatMap(
+      (bookCategory) => bookCategory.category.name,
+    ),
+  )
+
+  const mostReadCategory = categories ? getMostReadCategory(categories) : null
+
   const profileData = {
     user: {
       id: profile?.id,
@@ -42,6 +66,10 @@ export default async function handler(
       created_at: profile?.created_at,
     },
     ratings: profile?.ratings,
+    totalPagesRead,
+    totalBooksRated,
+    readAuthors: totalAuthorsRead?.length,
+    mostReadCategory,
   }
 
   return res.json({ profile: profileData })

@@ -6,6 +6,24 @@ export const ExploreBookCardContainer = styled('div', {
   padding: '1rem 1.25rem',
   backgroundColor: '$gray700',
   borderRadius: '$sm',
+  position: 'relative',
+})
+
+export const AlreadyReadBook = styled('div', {
+  position: 'absolute',
+  top: 0,
+  right: 0,
+  padding: '0.25rem 0.75rem',
+  backgroundColor: '$green300',
+  borderRadius: '0 $sm 0 $xs',
+
+  span: {
+    fontSize: '$xs',
+    fontWeight: '$bold',
+    lineHeight: '$shorter',
+    color: '$green100',
+    textTransform: 'uppercase',
+  },
 })
 
 export const BookCardInfos = styled('div', {

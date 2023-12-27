@@ -31,6 +31,10 @@ export const ProfileCard = styled('div', {
 export const ProfileCardInfos = styled('div', {
   display: 'flex',
   gap: '1.5rem',
+
+  img: {
+    objectFit: 'cover',
+  },
 })
 
 export const ProfileCardContent = styled('div', {

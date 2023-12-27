@@ -36,8 +36,8 @@ export type UserProfileProps = {
     name: string
     created_at: Date
   }
-  readPages: number
-  ratedBooks: number
+  totalPagesRead: number
+  totalBooksRated: number
   readAuthors: number
   mostReadCategory?: string
 }

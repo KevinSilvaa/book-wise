@@ -2,6 +2,7 @@
 import {
   BookCardInfos,
   BookCardTitle,
+  AlreadyReadBook,
   ExploreBookCardContainer,
 } from './styles'
 
@@ -19,8 +20,16 @@ type ExploreBookCardProps = {
 }
 
 export function ExploreBookCard({ book }: ExploreBookCardProps) {
+  const isBookAlreadyRead = book.bookAlreadyRead
+
   return (
     <ExploreBookCardContainer>
+      {isBookAlreadyRead ? (
+        <AlreadyReadBook>
+          <span>Lido</span>
+        </AlreadyReadBook>
+      ) : null}
+
       <Image src={book.cover_url} alt="" width={108} height={152} />
 
       <BookCardInfos>

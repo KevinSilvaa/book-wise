@@ -45,7 +45,7 @@ export function UserProfile({ profile }: UserProfileStatisticsProps) {
           <BookOpen size={32} />
 
           <ItemInfos>
-            <strong>3853</strong>
+            <strong>{profile?.totalPagesRead}</strong>
             <span>Páginas lidas</span>
           </ItemInfos>
         </UserProfileItem>
@@ -54,7 +54,7 @@ export function UserProfile({ profile }: UserProfileStatisticsProps) {
           <Books size={32} />
 
           <ItemInfos>
-            <strong>{profile?.ratings.length}</strong>
+            <strong>{profile?.totalBooksRated}</strong>
             <span>Livros avaliados</span>
           </ItemInfos>
         </UserProfileItem>
@@ -63,7 +63,7 @@ export function UserProfile({ profile }: UserProfileStatisticsProps) {
           <UserList size={32} />
 
           <ItemInfos>
-            <strong>8</strong>
+            <strong>{profile?.readAuthors}</strong>
             <span>Autores lidos</span>
           </ItemInfos>
         </UserProfileItem>
@@ -72,7 +72,7 @@ export function UserProfile({ profile }: UserProfileStatisticsProps) {
           <BookmarkSimple size={32} />
 
           <ItemInfos>
-            <strong>Computação</strong>
+            <strong>{profile?.mostReadCategory}</strong>
             <span>Categoria mais lida</span>
           </ItemInfos>
         </UserProfileItem>

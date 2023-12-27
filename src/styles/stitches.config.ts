@@ -35,7 +35,7 @@ export const { styled, getCssText, globalCss } = createStitches({
     },
 
     lineHeights: {
-      shorter: '125%',
+      shorter: '130%',
       short: '140%',
       base: '160%',
       tall: '180%',
@@ -71,7 +71,7 @@ export const { styled, getCssText, globalCss } = createStitches({
     },
 
     radii: {
-      xs: '2.5px',
+      xs: '4px',
       sm: '8px',
       md: '10px',
       xmd: '12px',
