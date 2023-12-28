@@ -17,7 +17,7 @@ export default async function handler(
     return res.status(401).end()
   }
 
-  const userId = session.user.id
+  const userId = String(session?.user?.id)
 
   const latestUserRating = await prisma.rating.findFirst({
     where: {
@@ -31,5 +31,5 @@ export default async function handler(
     },
   })
 
-  return res.json({ lastestRating: latestUserRating })
+  return res.json({ latestRating: latestUserRating })
 }

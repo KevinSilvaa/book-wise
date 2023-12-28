@@ -34,6 +34,11 @@ export const CardTitle = styled('div', {
     fontSize: '$md',
     color: '$gray100',
     lineHeight: '$short',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    '-webkit-line-clamp': 2,
+    '-webkit-box-orient': 'vertical',
   },
 
   span: {

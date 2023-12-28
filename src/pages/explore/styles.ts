@@ -7,6 +7,15 @@ export const ExploreContainer = styled('div', {
   gap: '2.5rem',
   paddingBottom: '3rem',
   marginTop: '2rem',
+  maxWidth: 'calc(100vw - 442px)',
+
+  '@media (max-width: 1250px)': {
+    maxWidth: 'calc(100vw - 346px)',
+  },
+
+  '@media (max-width: 900px)': {
+    maxWidth: '100vw',
+  },
 })
 
 export const ExploreHeader = styled('div', {
@@ -16,6 +25,12 @@ export const ExploreHeader = styled('div', {
 
   'div:last-child': {
     maxWidth: 433,
+  },
+
+  '@media (max-width: 1250px)': {
+    'div:last-child': {
+      maxWidth: 400,
+    },
   },
 
   '@media (max-width: 900px)': {
@@ -90,7 +105,7 @@ export const FilterTagItem = styled(ToggleGroup.Item, {
 
 export const BooksList = styled('section', {
   display: 'grid',
-  gridTemplateColumns: 'repeat(3, auto)',
+  gridTemplateColumns: 'repeat(3, 1fr)',
   gap: '1.25rem',
 
   '@media (max-width: 1280px)': {

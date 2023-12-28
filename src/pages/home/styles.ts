@@ -192,6 +192,14 @@ export const FeedbackSectionContent = styled('div', {
   maxHeight: 'calc(100vh - 32.5rem)',
   height: '100%',
 
+  variants: {
+    userIsNotSignedIn: {
+      true: {
+        maxHeight: 'calc(100vh - 14.5rem)',
+      },
+    },
+  },
+
   // Hide Scrollbar
   '&::-webkit-scrollbar': {
     display: 'none',

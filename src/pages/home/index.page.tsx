@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 // Styling Imports
 import {
   FeedbacksSection,
@@ -34,15 +35,15 @@ import Link from 'next/link'
 import { useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { Book, Rating, User } from '@prisma/client'
+import { Rating as StarRating } from '@/components/Rating'
+import { api } from '@/lib/axios'
+import dayjs from 'dayjs'
 
 // Icons Imports
-import { CaretRight, ChartLineUp, Star } from 'phosphor-react'
+import { CaretRight, ChartLineUp } from 'phosphor-react'
+import { BookWithAverageRatingProps } from '../explore/index.page'
 
-// Image Imports
-import bookImage from '../../../public/images/books/a-revolucao-dos-bichos.png'
-import { api } from '@/lib/axios'
-
-export interface RatingWithAuthorAndBook extends Rating {
+export type RatingWithAuthorAndBook = Rating & {
   user: User
   book: Book
 }
@@ -52,13 +53,36 @@ const Home: NextPageWithLayout = () => {
 
   const userIsAuthenticated = session.status === 'authenticated'
 
+  // Last user rated book
+  const { data: latestUserRating } = useQuery<RatingWithAuthorAndBook>({
+    queryKey: ['latest-user-rating', session.data?.user.id],
+    queryFn: async () => {
+      const { data } = await api.get('/ratings/user-latest')
+
+      return data?.latestRating ?? null
+    },
+    enabled: !!session.data?.user.id,
+  })
+
+  // Last rated books
   const { data: ratings } = useQuery<RatingWithAuthorAndBook[]>({
-    queryKey: ['latestRatings'],
+    queryKey: ['latest-ratings'],
     queryFn: async () => {
       const { data } = await api.get('/ratings/latest')
       return data.ratings
     },
   })
+
+  // Popular books
+  const { data: popularBooks } = useQuery<BookWithAverageRatingProps[]>({
+    queryKey: ['popular-books'],
+    queryFn: async () => {
+      const { data } = await api.get('/books/popular')
+
+      return data?.popularBooks ?? []
+    },
+  })
+  console.log(popularBooks)
 
   return (
     <HomeContainer>
@@ -69,43 +93,45 @@ const Home: NextPageWithLayout = () => {
 
       <HomeContent>
         <MainContent>
-          {userIsAuthenticated ? (
+          {userIsAuthenticated && latestUserRating ? (
             <UserRecommendedBooks>
               <UserRecommendedBooksHeader>
                 <h3>Sua última leitura</h3>
-                <Link href="/explore">
+                <Link href={`/profile/${session.data.user.id}`}>
                   <span>Ver todas</span>
                   <CaretRight size={16} />
                 </Link>
               </UserRecommendedBooksHeader>
               <RecommendBookCard>
-                <Image src={bookImage} alt="" width={108} height={152} />
+                <Image
+                  src={latestUserRating.book.cover_url}
+                  alt=""
+                  width={108}
+                  height={152}
+                />
 
                 <RecommendBookCardDetails>
                   <BookTextInformation>
                     <BookInfos>
-                      <time title="23/12/2023">Há 2 dias</time>
+                      <time title="23/12/2023">
+                        {dayjs(latestUserRating.created_at).fromNow()}
+                      </time>
 
                       <div>
-                        <h3>Entendendo Algoritmos</h3>
-                        <span>Aditya Bhargava</span>
+                        <h3>{latestUserRating?.book.name}</h3>
+                        <span>{latestUserRating?.book.author}</span>
                       </div>
                     </BookInfos>
 
                     <BookRating>
-                      <Star weight="fill" />
-                      <Star weight="fill" />
-                      <Star weight="fill" />
-                      <Star weight="fill" />
-                      <Star />
+                      <StarRating
+                        rating={latestUserRating.rate as number}
+                        starSize={16}
+                      />
                     </BookRating>
                   </BookTextInformation>
 
-                  <BookSummary>
-                    Nec tempor nunc in egestas. Euismod nisi eleifend at et in
-                    sagittis. Penatibus id vestibulum imperdiet a at imperdiet
-                    lectu
-                  </BookSummary>
+                  <BookSummary>{latestUserRating.book.summary}</BookSummary>
                 </RecommendBookCardDetails>
               </RecommendBookCard>
             </UserRecommendedBooks>
@@ -116,7 +142,7 @@ const Home: NextPageWithLayout = () => {
               <h3>Avaliações mais recentes</h3>
             </FeedbacksSectionHeader>
 
-            <FeedbackSectionContent>
+            <FeedbackSectionContent userIsNotSignedIn={!session.data?.user.id}>
               {ratings?.map((rating) => (
                 <ReviewCard key={rating.id} rating={rating} />
               ))}
@@ -136,10 +162,9 @@ const Home: NextPageWithLayout = () => {
             </PopularBooksHeader>
 
             <PopularBooksContent>
-              <PopularBookCard />
-              <PopularBookCard />
-              <PopularBookCard />
-              <PopularBookCard />
+              {popularBooks?.map((book) => (
+                <PopularBookCard key={book.id} book={book} />
+              ))}
             </PopularBooksContent>
           </PopularBooksSection>
         </HomeSideContent>

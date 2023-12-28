@@ -26,8 +26,8 @@ import { api } from '@/lib/axios'
 import { Binoculars } from 'phosphor-react'
 
 export type BookWithAverageRatingProps = Book & {
-  averageRating: number
   bookAlreadyRead: boolean
+  averageRating: number
 }
 
 const Explore: NextPageWithLayout = () => {

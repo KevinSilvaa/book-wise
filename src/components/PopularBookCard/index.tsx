@@ -4,30 +4,27 @@ import { BookRating } from '@/pages/home/styles'
 
 // Strategic Imports
 import Image from 'next/image'
+import { BookWithAverageRatingProps } from '@/pages/explore/index.page'
+import { VariantProps } from '@stitches/react'
+import { Rating as StarRating } from '../Rating'
 
-// Icons Imports
-import { Star } from 'phosphor-react'
+interface PopularBookCardProps extends VariantProps<typeof CardContainer> {
+  book: BookWithAverageRatingProps
+}
 
-// Image Imports
-import bookCardImage from '../../../public/images/books/a-revolucao-dos-bichos.png'
-
-export function PopularBookCard() {
+export function PopularBookCard({ book }: PopularBookCardProps) {
   return (
     <CardContainer>
-      <Image src={bookCardImage} alt="" width={64} height={94} />
+      <Image src={book.cover_url} alt="" width={64} height={94} />
 
       <CardContent>
         <CardTitle>
-          <strong>A revolução dos bichos</strong>
-          <span>George Orwell</span>
+          <strong>{book.name}</strong>
+          <span>{book.author}</span>
         </CardTitle>
 
         <BookRating>
-          <Star weight="fill" />
-          <Star weight="fill" />
-          <Star weight="fill" />
-          <Star weight="fill" />
-          <Star />
+          <StarRating rating={book.averageRating} starSize={16} />
         </BookRating>
       </CardContent>
     </CardContainer>
