@@ -50,6 +50,10 @@ export const UserProfileStatistics = styled('div', {
   flexDirection: 'column',
   gap: '2.5rem',
   padding: '1.25rem 3.5rem',
+
+  '@media (max-width: 1250px)': {
+    margin: '0 auto',
+  },
 })
 
 export const UserProfileItem = styled('div', {

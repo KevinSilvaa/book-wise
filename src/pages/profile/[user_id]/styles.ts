@@ -8,6 +8,7 @@ export const ProfileContainer = styled('div', {
   paddingBottom: '5.25rem',
   boxSizing: 'border-box',
   width: 'calc(100% - 2px)',
+  marginTop: '2rem',
 })
 
 export const ProfileHeader = styled('div', {
@@ -62,6 +63,10 @@ export const ProfileContent = styled('section', {
   display: 'grid',
   gridTemplateColumns: '1fr 308px',
   gap: '4rem',
+
+  '@media (max-width: 1250px)': {
+    gridTemplateColumns: '1fr',
+  },
 })
 
 export const MainContent = styled('div', {
@@ -74,9 +79,27 @@ export const BooksReviewContent = styled('section', {
   display: 'flex',
   flexDirection: 'column',
   gap: '1.5rem',
+  overflow: 'auto',
+  maxHeight: 'calc(100vh - 16rem)',
+
+  // Hide Scrollbar
+  '&::-webkit-scrollbar': {
+    display: 'none',
+  },
+
+  '-ms-overflow-style': 'none',
+  scrollbarWidth: 'none',
+
+  '@media (max-width: 1250px)': {
+    maxHeight: 'calc(100vh - 36rem)',
+  },
 })
 
 export const ProfileInfo = styled('section', {
   borderLeft: '1px solid $gray700',
   height: 'fit-content',
+
+  '@media (max-width: 1250px)': {
+    borderLeftColor: 'transparent',
+  },
 })

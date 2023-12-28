@@ -55,6 +55,14 @@ export const FilterTagsContainer = styled(ToggleGroup.Root, {
   display: 'flex',
   gap: '0.75rem',
   overflowX: 'auto',
+
+  // Hide Scrollbar
+  '&::-webkit-scrollbar': {
+    display: 'none',
+  },
+
+  '-ms-overflow-style': 'none',
+  scrollbarWidth: 'none',
 })
 
 export const FilterTagItem = styled(ToggleGroup.Item, {
@@ -73,7 +81,7 @@ export const FilterTagItem = styled(ToggleGroup.Item, {
     borderColor: '$purple100',
   },
 
-  '&[data-state="on"]': {
+  '&[aria-checked="true"]': {
     backgroundColor: '$purple200',
     color: '$white',
     borderColor: '$purple200',
@@ -82,7 +90,7 @@ export const FilterTagItem = styled(ToggleGroup.Item, {
 
 export const BooksList = styled('section', {
   display: 'grid',
-  gridTemplateColumns: 'repeat(3, 1fr)',
+  gridTemplateColumns: 'repeat(3, auto)',
   gap: '1.25rem',
 
   '@media (max-width: 1280px)': {

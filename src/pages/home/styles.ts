@@ -30,6 +30,10 @@ export const HomeContent = styled('section', {
   gridTemplateColumns: '1fr 324px',
   gap: '4rem',
 
+  '@media (min-width: 1440px)': {
+    gridTemplateColumns: '1fr 0.5fr',
+  },
+
   '@media (max-width: 1250px)': {
     gridTemplateColumns: '1fr',
   },
@@ -40,6 +44,10 @@ export const MainContent = styled('div', {
   flexDirection: 'column',
   gap: '2.5rem',
   maxWidth: 608,
+
+  '@media (min-width: 1440px)': {
+    maxWidth: '100%',
+  },
 
   '@media (max-width: 1250px)': {
     maxWidth: '100%',
@@ -180,6 +188,22 @@ export const FeedbackSectionContent = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   gap: '0.75rem',
+  overflow: 'auto',
+  maxHeight: 'calc(100vh - 32.5rem)',
+  height: '100%',
+
+  // Hide Scrollbar
+  '&::-webkit-scrollbar': {
+    display: 'none',
+  },
+
+  '-ms-overflow-style': 'none',
+  scrollbarWidth: 'none',
+
+  '@media (max-width: 1250px)': {
+    maxHeight: '100%',
+    overflow: 'unset',
+  },
 
   '@media (max-width: 530px)': {
     gap: '1.5rem',

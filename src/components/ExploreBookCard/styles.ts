@@ -7,6 +7,13 @@ export const ExploreBookCardContainer = styled('div', {
   backgroundColor: '$gray700',
   borderRadius: '$sm',
   position: 'relative',
+  cursor: 'pointer',
+  border: '2px solid transparent',
+  transition: 'all 0.3s ease-out',
+
+  '&:hover': {
+    borderColor: '$gray600',
+  },
 })
 
 export const AlreadyReadBook = styled('div', {

@@ -83,13 +83,15 @@ const Explore: NextPageWithLayout = () => {
       <ExploreContent>
         <FilterTagsContainer
           type="single"
-          defaultValue="tudo"
+          defaultValue="Tudo"
           value={categoryValue!}
           onValueChange={(value) => {
             value === 'Tudo' ? setCategoryValue(null) : setCategoryValue(value)
           }}
         >
-          <FilterTagItem value="Tudo">Tudo</FilterTagItem>
+          <FilterTagItem value="Tudo" aria-checked={categoryValue === null}>
+            Tudo
+          </FilterTagItem>
           {categories?.map((category) => (
             <FilterTagItem key={category.id} value={category.id}>
               {category.name}

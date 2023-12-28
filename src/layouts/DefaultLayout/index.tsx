@@ -14,7 +14,7 @@ export function DefaultLayout({ children }: Props) {
 
   return (
     <LayoutContainer>
-      <SideBar open={open} />
+      <SideBar open={open} onPageClick={() => setOpen(!open)} />
       <Content>
         <HamburgerMenu
           onClick={() => setOpen(!open)}

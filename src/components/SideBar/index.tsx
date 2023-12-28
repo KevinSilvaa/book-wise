@@ -22,9 +22,10 @@ import bookWiseLogo from '../../../public/images/logo.png'
 
 type SideBarProps = {
   open?: boolean
+  onPageClick: () => void
 }
 
-export function SideBar({ open }: SideBarProps) {
+export function SideBar({ open = false, onPageClick }: SideBarProps) {
   const session = useSession()
 
   const userIsAuthenticated = session.status === 'authenticated'
@@ -47,12 +48,20 @@ export function SideBar({ open }: SideBarProps) {
         </ContentHeader>
 
         <ContentNavbar>
-          <NavbarItem href="/home" active={currentPage === '/home'}>
+          <NavbarItem
+            href="/home"
+            active={currentPage === '/home'}
+            onClick={open ? onPageClick : undefined}
+          >
             <ChartLineUp size={24} />
             Início
           </NavbarItem>
 
-          <NavbarItem href="/explore" active={currentPage === '/explore'}>
+          <NavbarItem
+            href="/explore"
+            active={currentPage === '/explore'}
+            onClick={open ? onPageClick : undefined}
+          >
             <Binoculars size={24} />
             Explorar
           </NavbarItem>
@@ -61,6 +70,7 @@ export function SideBar({ open }: SideBarProps) {
             <NavbarItem
               href={`/profile/${session.data.user.id}`}
               active={currentPage.includes('profile')}
+              onClick={open ? onPageClick : undefined}
             >
               <User size={24} />
               Perfil
