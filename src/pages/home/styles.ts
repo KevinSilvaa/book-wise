@@ -193,6 +193,11 @@ export const FeedbackSectionContent = styled('div', {
   height: '100%',
 
   variants: {
+    userDontHaveRecentReadBook: {
+      true: {
+        maxHeight: 'calc(100vh - 14.5rem)',
+      },
+    },
     userIsNotSignedIn: {
       true: {
         maxHeight: 'calc(100vh - 14.5rem)',

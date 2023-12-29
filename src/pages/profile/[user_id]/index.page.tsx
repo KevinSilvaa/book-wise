@@ -56,7 +56,7 @@ const Profile: NextPageWithLayout = () => {
   }
 
   const { data: userProfile } = useQuery<UserProfileProps>({
-    queryKey: ['userProfile', userId],
+    queryKey: ['user-profile', userId],
     queryFn: async () => {
       const { data } = await api.get(`profile/${userId}`)
       return data?.profile ?? {}

@@ -15,17 +15,17 @@ import { getSession, signIn } from 'next-auth/react'
 import { GetServerSideProps } from 'next'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../api/auth/[...nextauth].api'
+import { useEffect } from 'react'
 
 // Image Imports
 import backgroundImageLogin from '../../../public/images/login-image.png'
 import logoGoogle from '@/assets/logos/logo-google.svg'
 import logoGithub from '@/assets/logos/logo-github.svg'
 import logoVisitante from '@/assets/logos/logo-visitante.svg'
-import { useEffect } from 'react'
 
-type AuthProps = {
+export type AuthProps = {
   callbackUrl?: string
-  provider?: string
+  provider?: 'google' | 'github'
 }
 
 export default function Login() {

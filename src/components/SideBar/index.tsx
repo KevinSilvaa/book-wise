@@ -13,12 +13,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { signOut, useSession } from 'next-auth/react'
+import * as Dialog from '@radix-ui/react-dialog'
 
 // Icons Imports
 import { Binoculars, ChartLineUp, SignIn, SignOut, User } from 'phosphor-react'
 
 // Image Imports
 import bookWiseLogo from '../../../public/images/logo.png'
+import { LoginModal } from '../LoginModal'
 
 type SideBarProps = {
   open?: boolean
@@ -89,10 +91,16 @@ export function SideBar({ open = false, onPageClick }: SideBarProps) {
               <SignOut size={20} />
             </LoginInfo>
           ) : (
-            <LoginInfo onClick={() => console.log('colocar modal aqui')}>
-              <span>Fazer login</span>
-              <SignIn size={20} />
-            </LoginInfo>
+            <Dialog.Root>
+              <Dialog.Trigger asChild>
+                <LoginInfo>
+                  <span>Fazer login</span>
+                  <SignIn size={20} />
+                </LoginInfo>
+              </Dialog.Trigger>
+
+              <LoginModal />
+            </Dialog.Root>
           )}
         </ContentNavbar>
       </SideBarContent>

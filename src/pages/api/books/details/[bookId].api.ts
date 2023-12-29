@@ -44,5 +44,5 @@ export default async function handler(
     averageRating: booksAverageRating[0]._avg.rate ?? 0,
   }
 
-  return res.json({ book: bookWithAverageRating })
+  return res.json({ bookDetails: bookWithAverageRating })
 }

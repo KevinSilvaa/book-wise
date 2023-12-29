@@ -64,6 +64,8 @@ const Home: NextPageWithLayout = () => {
     enabled: !!session.data?.user.id,
   })
 
+  const userDontHaveRecentReadBooks = latestUserRating === null
+
   // Last rated books
   const { data: ratings } = useQuery<RatingWithAuthorAndBook[]>({
     queryKey: ['latest-ratings'],
@@ -82,7 +84,6 @@ const Home: NextPageWithLayout = () => {
       return data?.popularBooks ?? []
     },
   })
-  console.log(popularBooks)
 
   return (
     <HomeContainer>
@@ -142,7 +143,10 @@ const Home: NextPageWithLayout = () => {
               <h3>Avaliações mais recentes</h3>
             </FeedbacksSectionHeader>
 
-            <FeedbackSectionContent userIsNotSignedIn={!session.data?.user.id}>
+            <FeedbackSectionContent
+              userDontHaveRecentReadBook={userDontHaveRecentReadBooks}
+              userIsNotSignedIn={!session.data?.user.id}
+            >
               {ratings?.map((rating) => (
                 <ReviewCard key={rating.id} rating={rating} />
               ))}

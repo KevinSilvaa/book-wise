@@ -5,6 +5,7 @@ import {
   AlreadyReadBook,
   ExploreBookCardContainer,
 } from './styles'
+import { BookDetailsRoot, BookDetailsTrigger } from '../BookDetailsModal/styles'
 
 // Components Imports
 import { Rating as StarRating } from '../Rating'
@@ -12,23 +13,21 @@ import { Rating as StarRating } from '../Rating'
 // Strategic Imports
 import Image from 'next/image'
 import { BookWithAverageRatingProps } from '@/pages/explore/index.page'
+import { BookDetailsModal } from '../BookDetailsModal'
 import { useState } from 'react'
-import { BookDetails } from '../BookDetails'
-import { BookDetailsRoot, BookDetailsTrigger } from '../BookDetails/styles'
 
 type ExploreBookCardProps = {
   book: BookWithAverageRatingProps
 }
 
 export function ExploreBookCard({ book }: ExploreBookCardProps) {
-  const [isSelected, setIsSelected] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const isBookAlreadyRead = book.bookAlreadyRead
-  console.log(isSelected)
 
   return (
     <BookDetailsRoot>
-      <BookDetailsTrigger asChild>
-        <ExploreBookCardContainer onClick={() => setIsSelected(!isSelected)}>
+      <BookDetailsTrigger asChild onClick={() => setIsModalOpen(!isModalOpen)}>
+        <ExploreBookCardContainer>
           {isBookAlreadyRead ? (
             <AlreadyReadBook>
               <span>Lido</span>
@@ -48,7 +47,7 @@ export function ExploreBookCard({ book }: ExploreBookCardProps) {
         </ExploreBookCardContainer>
       </BookDetailsTrigger>
 
-      <BookDetails book={book} />
+      <BookDetailsModal book={book} open={isModalOpen} />
     </BookDetailsRoot>
   )
 }

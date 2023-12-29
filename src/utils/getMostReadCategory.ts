@@ -8,7 +8,8 @@ export const getMostReadCategory = (arr: string[]) => {
     {} as Record<string, number>,
   )
 
-  return Object.keys(hashmap).reduce((a, b) =>
-    hashmap[a] > hashmap[b] ? a : b,
+  return Object.keys(hashmap).reduce(
+    (a, b) => (hashmap[a] > hashmap[b] ? a : b),
+    'Nenhuma categoria',
   )
 }

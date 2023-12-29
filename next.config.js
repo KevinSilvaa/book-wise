@@ -4,7 +4,7 @@ const nextConfig = {
   pageExtensions: ['page.tsx', 'api.ts', 'api.tsx'],
   images: {
     remotePatterns: [
-      { hostname: 'github.com' },
+      { hostname: 'avatars.githubusercontent.com' },
       { hostname: 'lh3.googleusercontent.com' },
       { hostname: 'images.unsplash.com' },
     ],

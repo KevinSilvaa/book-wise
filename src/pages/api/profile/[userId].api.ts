@@ -8,7 +8,7 @@ export default async function handler(
 ) {
   if (req.method !== 'GET') return res.status(405).end()
 
-  const userId = String(req.query.userId)
+  const userId = req.query.userId as string
 
   const profile = await prisma.user.findUnique({
     where: {
@@ -41,9 +41,9 @@ export default async function handler(
 
   const totalBooksRated = profile?.ratings.length
 
-  const totalAuthorsRead = profile?.ratings.reduce((acc, currentRating) => {
-    if (!acc.includes(currentRating.book.author)) {
-      acc.push(currentRating.book.author)
+  const totalAuthorsRead = profile?.ratings.reduce((acc, rating) => {
+    if (!acc.includes(rating.book.author)) {
+      acc.push(rating.book.author)
     }
 
     return acc
@@ -55,7 +55,9 @@ export default async function handler(
     ),
   )
 
-  const mostReadCategory = categories ? getMostReadCategory(categories) : null
+  const mostReadCategory = categories
+    ? getMostReadCategory(categories)
+    : 'Nenhuma categoria'
 
   const profileData = {
     user: {
