@@ -1,6 +1,8 @@
 import { styled } from '@/styles/stitches.config'
 import { keyframes } from '@stitches/react'
 
+import * as Toast from '@radix-ui/react-toast'
+
 const loadingNewComment = keyframes({
   '0%': {
     transform: 'rotate(0)',
@@ -74,6 +76,11 @@ export const TextAreaContainer = styled('div', {
     width: '100%',
     position: 'relative',
     height: 164,
+
+    '&:disabled': {
+      opacity: 0.6,
+      cursor: 'not-allowed',
+    },
 
     // Hide Scrollbar
     '&::-webkit-scrollbar': {
@@ -149,4 +156,82 @@ export const ButtonItem = styled('button', {
       },
     },
   },
+})
+
+const hide = keyframes({
+  '0%': { opacity: 1 },
+  '100%': { opacity: 0 },
+})
+
+const slideIn = keyframes({
+  from: { transform: 'translateX(calc(100% + 24px))' },
+  to: { transform: 'translateX(0)' },
+})
+
+const swipeOut = keyframes({
+  from: { transform: 'translateX(0)' },
+  to: { transform: 'translateX(calc(100% + 24px))' },
+})
+
+export const ToastViewport = styled(Toast.Viewport, {
+  position: 'fixed',
+  bottom: '1rem',
+  right: '1rem',
+  display: 'flex',
+  flexDirection: 'column',
+  padding: '1.5rem',
+  gap: '1rem',
+  width: 390,
+  maxWidth: '100vw',
+  margin: 0,
+  listStyle: 'none',
+  zIndex: 2147483647,
+  outline: 'none',
+
+  '@media (max-width: 550px)': {
+    right: 0,
+  },
+})
+
+export const ToastRoot = styled(Toast.Root, {
+  backgroundColor: '#00875F',
+  borderRadius: '$sm',
+  boxShadow:
+    'hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px',
+  padding: '1rem',
+  display: 'grid',
+  gridTemplateAreas: '"title action" "description action"',
+  gridTemplateColumns: 'auto max-content',
+  gap: '1rem',
+  alignItems: 'center',
+
+  '&[data-state="open"]': {
+    animation: `${slideIn} 150ms cubic-bezier(0.16, 1, 0.3, 1)`,
+  },
+  '&[data-state="closed"]': {
+    animation: `${hide} 100ms ease-in`,
+  },
+  '&[data-swipe="cancel"]': {
+    transform: 'translateX(0)',
+    transition: 'transform 200ms ease-out',
+  },
+  '&[data-swipe="end"]': {
+    animation: `${swipeOut} 100ms ease-out`,
+  },
+})
+
+export const ToastTitle = styled(Toast.Title, {
+  gridArea: 'title',
+  marginBottom: '0.5rem',
+  fontWeight: '$medium',
+  lineHeight: '$short',
+  color: '$gray100',
+})
+
+export const ToastDescription = styled(Toast.Description, {
+  gridArea: 'description',
+  margin: 0,
+  color: '$gray300',
+  fontSize: '$sm',
+  lineHeight: '$base',
 })

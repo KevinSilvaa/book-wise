@@ -10,6 +10,10 @@ import {
   ContentButtons,
   FormError,
   TextAreaContainer,
+  ToastDescription,
+  ToastRoot,
+  ToastTitle,
+  ToastViewport,
 } from './styles'
 
 // Components Imports
@@ -18,15 +22,17 @@ import { Rating as StarRating } from '../Rating'
 // Strategic Imports
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
-import { Dispatch, SetStateAction } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { api } from '@/lib/axios'
+import * as Toast from '@radix-ui/react-toast'
 
 // Icons Imports
 import { Check, CircleNotch, X } from 'phosphor-react'
+import { BookWithAverageRatingProps } from '@/pages/explore/index.page'
 
 const CommentFormBodySchema = z.object({
   rate: z
@@ -43,10 +49,17 @@ type CommentFormBodyData = z.infer<typeof CommentFormBodySchema>
 
 type CommentFormProps = {
   setNewFormRating: Dispatch<SetStateAction<boolean>>
-  bookId: string
+  setModalOpen: Dispatch<SetStateAction<boolean>>
+  book: BookWithAverageRatingProps
 }
 
-export function CommentForm({ setNewFormRating, bookId }: CommentFormProps) {
+export function CommentForm({
+  setNewFormRating,
+  book,
+  setModalOpen,
+}: CommentFormProps) {
+  const [toastOpen, setToastOpen] = useState(false)
+
   const session = useSession()
 
   const {
@@ -55,7 +68,7 @@ export function CommentForm({ setNewFormRating, bookId }: CommentFormProps) {
     control,
     watch,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isSubmitSuccessful },
   } = useForm<CommentFormBodyData>({
     resolver: zodResolver(CommentFormBodySchema),
   })
@@ -68,7 +81,7 @@ export function CommentForm({ setNewFormRating, bookId }: CommentFormProps) {
 
   const { mutateAsync: handleNewRate } = useMutation({
     mutationFn: async (data: CommentFormBodyData) => {
-      await api.post(`/books/${bookId}/rate`, {
+      await api.post(`/books/${book.id}/rate`, {
         description: data.description,
         rate: data.rate,
       })
@@ -80,7 +93,12 @@ export function CommentForm({ setNewFormRating, bookId }: CommentFormProps) {
 
     reset()
 
-    setNewFormRating(false)
+    setTimeout(() => {
+      setNewFormRating(false)
+      setModalOpen(false)
+    }, 4000)
+
+    setToastOpen(true)
   }
 
   return (
@@ -120,6 +138,7 @@ export function CommentForm({ setNewFormRating, bookId }: CommentFormProps) {
             placeholder="Escreva a sua avaliação"
             maxLength={450}
             {...register('description')}
+            disabled={isSubmitSuccessful}
           />
           <span>{countCommentCharacters()}/450</span>
         </TextAreaContainer>
@@ -128,18 +147,37 @@ export function CommentForm({ setNewFormRating, bookId }: CommentFormProps) {
           <FormError>{errors.description.message}</FormError>
         )}
 
-        <ContentButtons>
-          <ButtonItem onClick={() => setNewFormRating(false)}>
+        <ContentButtons id="buttons">
+          <ButtonItem
+            onClick={() => setNewFormRating(false)}
+            disabled={isSubmitSuccessful}
+          >
             <X size={24} weight="bold" />
           </ButtonItem>
 
-          <ButtonItem type="submit" disabled={isSubmitting}>
-            {isSubmitting ? (
-              <CircleNotch size={24} weight="bold" />
-            ) : (
-              <Check size={24} weight="bold" />
-            )}
-          </ButtonItem>
+          <Toast.Provider swipeDirection="right" duration={4000}>
+            <ButtonItem
+              type="submit"
+              disabled={isSubmitting || isSubmitSuccessful}
+            >
+              {isSubmitting ? (
+                <CircleNotch size={24} weight="bold" />
+              ) : (
+                <Check size={24} weight="bold" />
+              )}
+            </ButtonItem>
+
+            <ToastRoot open={toastOpen} onOpenChange={setToastOpen}>
+              <ToastTitle>{`O livro "${book.name}" foi avaliado com sucesso!`}</ToastTitle>
+              <ToastDescription asChild>
+                <span>{`Você avaliou este livro com ${watch(
+                  'rate',
+                )} estrelas`}</span>
+              </ToastDescription>
+            </ToastRoot>
+
+            <ToastViewport />
+          </Toast.Provider>
         </ContentButtons>
       </CommentFormContent>
     </CommentFormContainer>

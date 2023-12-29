@@ -26,7 +26,7 @@ export function ExploreBookCard({ book }: ExploreBookCardProps) {
 
   return (
     <BookDetailsRoot>
-      <BookDetailsTrigger asChild onClick={() => setIsModalOpen(!isModalOpen)}>
+      <BookDetailsTrigger asChild onClick={() => setIsModalOpen(true)}>
         <ExploreBookCardContainer>
           {isBookAlreadyRead ? (
             <AlreadyReadBook>
@@ -47,7 +47,13 @@ export function ExploreBookCard({ book }: ExploreBookCardProps) {
         </ExploreBookCardContainer>
       </BookDetailsTrigger>
 
-      <BookDetailsModal book={book} open={isModalOpen} />
+      {isModalOpen && (
+        <BookDetailsModal
+          book={book}
+          open={isModalOpen}
+          setModalOpen={setIsModalOpen}
+        />
+      )}
     </BookDetailsRoot>
   )
 }

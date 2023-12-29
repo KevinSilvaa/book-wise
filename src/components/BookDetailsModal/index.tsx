@@ -34,7 +34,7 @@ import { CategoriesOnBooks, Category, Rating } from '@prisma/client'
 import { useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { api } from '@/lib/axios'
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 
 // Icons Imports
@@ -47,6 +47,7 @@ export type RatingWithAuthorProps = Rating & {
 type BookDetailsProps = {
   book: BookWithAverageRatingProps
   open: boolean
+  setModalOpen: Dispatch<SetStateAction<boolean>>
 }
 
 type BookDetailsWithCategoriesProps = BookDetailsProps & {
@@ -56,7 +57,11 @@ type BookDetailsWithCategoriesProps = BookDetailsProps & {
   })[]
 }
 
-export function BookDetailsModal({ book, open }: BookDetailsProps) {
+export function BookDetailsModal({
+  book,
+  open,
+  setModalOpen,
+}: BookDetailsProps) {
   const [newFormRating, setNewFormRating] = useState(false)
 
   const session = useSession()
@@ -170,7 +175,8 @@ export function BookDetailsModal({ book, open }: BookDetailsProps) {
             {newFormRating && (
               <CommentForm
                 setNewFormRating={setNewFormRating}
-                bookId={book.id}
+                book={book}
+                setModalOpen={setModalOpen}
               />
             )}
 
