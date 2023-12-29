@@ -17,7 +17,7 @@ const nunitoSans = Nunito_Sans({
   weight: ['400', '700'],
 })
 
-export type NextPageWithLayout<Page = {}, InterfacePage = Page> = NextPage<
+export type NextPageWithLayout<Page = object, InterfacePage = Page> = NextPage<
   Page,
   InterfacePage
 > & {
