@@ -44,7 +44,7 @@ export const books = [
     author: 'Douglas Adams',
     summary:
       'Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis. Penatibus id vestibulum imperdiet a at imperdiet lectus leo. Sit porta eget nec vitae sit vulputate eget',
-    cover_url: '/images/books/o-guia-do-mochileiro-das-galáxias.png',
+    cover_url: '/images/books/o-guia-do-mochileiro-das-galaxias.png',
     total_pages: 250,
     categories: [
       {
@@ -63,7 +63,7 @@ export const books = [
     author: 'George Orwell',
     summary:
       'Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis. Penatibus id vestibulum imperdiet a at imperdiet lectus leo. Sit porta eget nec vitae sit vulputate eget',
-    cover_url: '/images/books/a-revolucao-dos-bixos.png',
+    cover_url: '/images/books/a-revolucao-dos-bichos.png',
     total_pages: 350,
     categories: [
       {

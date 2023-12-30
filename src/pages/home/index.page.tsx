@@ -42,6 +42,7 @@ import dayjs from 'dayjs'
 // Icons Imports
 import { CaretRight, ChartLineUp } from 'phosphor-react'
 import { BookWithAverageRatingProps } from '../explore/index.page'
+import { useRouter } from 'next/router'
 
 export type RatingWithAuthorAndBook = Rating & {
   user: User
@@ -51,7 +52,13 @@ export type RatingWithAuthorAndBook = Rating & {
 const Home: NextPageWithLayout = () => {
   const session = useSession()
 
+  const router = useRouter()
+
   const userIsAuthenticated = session.status === 'authenticated'
+
+  function handleNavigateExplorePage() {
+    router.push(`/explore?bookId=${latestUserRating?.book_id}`)
+  }
 
   // Last user rated book
   const { data: latestUserRating } = useQuery<RatingWithAuthorAndBook>({
@@ -103,9 +110,9 @@ const Home: NextPageWithLayout = () => {
                   <CaretRight size={16} />
                 </Link>
               </UserRecommendedBooksHeader>
-              <RecommendBookCard>
+              <RecommendBookCard onClick={handleNavigateExplorePage}>
                 <Image
-                  src={latestUserRating.book.cover_url}
+                  src={latestUserRating.book?.cover_url}
                   alt=""
                   width={108}
                   height={152}

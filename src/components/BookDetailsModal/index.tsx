@@ -93,10 +93,10 @@ export function BookDetailsModal({
 
   return (
     <BookDetailsPortal>
-      <BookDetailsOverlay />
+      <BookDetailsOverlay onClick={() => setModalOpen(false)} />
 
       <BookDetailsContent>
-        <CloseButton asChild>
+        <CloseButton asChild onClick={() => setModalOpen(false)}>
           <X size={24} weight="bold" />
         </CloseButton>
         <Card>

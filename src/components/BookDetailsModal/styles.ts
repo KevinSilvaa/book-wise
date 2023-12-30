@@ -48,7 +48,6 @@ export const BookDetailsContent = styled(Dialog.Content, {
   zIndex: 20,
   padding: '4rem 3rem',
   background: '$gray800',
-  boxShadow: '-4px 0px 30px 0px rgba(0, 0, 0, 0.50)',
   display: 'flex',
   flexDirection: 'column',
   gap: '2.5rem',

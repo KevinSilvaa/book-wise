@@ -16,14 +16,23 @@ import { ExploreBookCard } from '@/components/ExploreBookCard'
 
 // Strategic Imports
 import { NextPageWithLayout } from '../_app.page'
-import { ChangeEvent, ReactElement, useState } from 'react'
+import {
+  ChangeEvent,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react'
 import { DefaultLayout } from '@/layouts/DefaultLayout'
 import { useQuery } from '@tanstack/react-query'
 import { Book, Category } from '@prisma/client'
 import { api } from '@/lib/axios'
+import * as Dialog from '@radix-ui/react-dialog'
 
 // Icons Imports
 import { Binoculars } from 'phosphor-react'
+import { useRouter } from 'next/router'
+import { BookDetailsModal } from '@/components/BookDetailsModal'
 
 export type BookWithAverageRatingProps = Book & {
   bookAlreadyRead: boolean
@@ -33,6 +42,21 @@ export type BookWithAverageRatingProps = Book & {
 const Explore: NextPageWithLayout = () => {
   const [search, setSearch] = useState('')
   const [categoryValue, setCategoryValue] = useState<string | null>(null)
+
+  const [modalOpen, setModalOpen] = useState(false)
+  const [book, setBook] = useState<BookWithAverageRatingProps>({
+    id: '',
+    name: '',
+    author: '',
+    summary: '',
+    cover_url: '',
+    total_pages: 0,
+    created_at: new Date(),
+    averageRating: 0,
+    bookAlreadyRead: false,
+  })
+
+  const router = useRouter()
 
   const { data: books } = useQuery<BookWithAverageRatingProps[]>({
     queryKey: ['books', categoryValue],
@@ -62,6 +86,25 @@ const Explore: NextPageWithLayout = () => {
       return data?.categories ?? []
     },
   })
+
+  const latestBookId = String(router.query.bookId)
+
+  const rated = useCallback(
+    function bookRecentlyRated() {
+      if (books?.find((book) => book.id === latestBookId)) {
+        setModalOpen(true)
+        return books?.find((book) => book.id === latestBookId)
+      }
+    },
+    [books, latestBookId],
+  )
+
+  useEffect(() => {
+    if (rated()) {
+      const bookRated = rated()
+      setBook(bookRated!)
+    }
+  }, [rated])
 
   return (
     <ExploreContainer>
@@ -105,6 +148,13 @@ const Explore: NextPageWithLayout = () => {
           ))}
         </BooksList>
       </ExploreContent>
+      <Dialog.Root open={modalOpen}>
+        <BookDetailsModal
+          book={book!}
+          open={modalOpen}
+          setModalOpen={setModalOpen}
+        />
+      </Dialog.Root>
     </ExploreContainer>
   )
 }

@@ -7,29 +7,29 @@ const prisma = new PrismaClient()
 
 async function main() {
   await prisma.rating.deleteMany()
-  await prisma.user.deleteMany()
+  // await prisma.user.deleteMany()
   await prisma.categoriesOnBooks.deleteMany()
-  await prisma.category.deleteMany()
+  // await prisma.category.deleteMany()
   await prisma.book.deleteMany()
 
-  const usersSeed = users.map((user) => {
-    return prisma.user.create({
-      data: {
-        id: user.id,
-        name: user.name,
-        avatar_url: user.avatar_url,
-      },
-    })
-  })
+  // const usersSeed = users.map((user) => {
+  //   return prisma.user.create({
+  //     data: {
+  //       id: user.id,
+  //       name: user.name,
+  //       avatar_url: user.avatar_url,
+  //     },
+  //   })
+  // })
 
-  const categoriesSeed = categories.map((category) => {
-    return prisma.category.create({
-      data: {
-        name: category.name,
-        id: category.id,
-      },
-    })
-  })
+  // const categoriesSeed = categories.map((category) => {
+  //   return prisma.category.create({
+  //     data: {
+  //       name: category.name,
+  //       id: category.id,
+  //     },
+  //   })
+  // })
 
   const booksSeed = books.map((book) => {
     return prisma.book.create({
@@ -74,9 +74,9 @@ async function main() {
   })
 
   await prisma.$transaction([
-    ...categoriesSeed,
+    // ...categoriesSeed,
     ...booksSeed,
-    ...usersSeed,
+    // ...usersSeed,
     ...ratingsSeed,
   ])
 }

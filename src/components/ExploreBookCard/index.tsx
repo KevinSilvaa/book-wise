@@ -18,14 +18,18 @@ import { useState } from 'react'
 
 type ExploreBookCardProps = {
   book: BookWithAverageRatingProps
+  bookRecentlyRated?: BookWithAverageRatingProps
 }
 
-export function ExploreBookCard({ book }: ExploreBookCardProps) {
+export function ExploreBookCard({
+  book,
+  bookRecentlyRated,
+}: ExploreBookCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const isBookAlreadyRead = book.bookAlreadyRead
 
   return (
-    <BookDetailsRoot>
+    <BookDetailsRoot open={isModalOpen}>
       <BookDetailsTrigger asChild onClick={() => setIsModalOpen(true)}>
         <ExploreBookCardContainer>
           {isBookAlreadyRead ? (
@@ -47,7 +51,13 @@ export function ExploreBookCard({ book }: ExploreBookCardProps) {
         </ExploreBookCardContainer>
       </BookDetailsTrigger>
 
-      {isModalOpen && (
+      {isModalOpen && bookRecentlyRated ? (
+        <BookDetailsModal
+          book={bookRecentlyRated}
+          open={true}
+          setModalOpen={setIsModalOpen}
+        />
+      ) : (
         <BookDetailsModal
           book={book}
           open={isModalOpen}

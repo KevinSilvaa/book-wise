@@ -147,7 +147,7 @@ export function CommentForm({
           <FormError>{errors.description.message}</FormError>
         )}
 
-        <ContentButtons id="buttons">
+        <ContentButtons isSubmitting={isSubmitting}>
           <ButtonItem
             onClick={() => setNewFormRating(false)}
             disabled={isSubmitSuccessful}

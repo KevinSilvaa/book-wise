@@ -53,7 +53,6 @@ export const UserInfos = styled(Link, {
 export const RecentReviewCardContent = styled('div', {
   display: 'flex',
   gap: '1.25rem',
-  cursor: 'pointer',
 })
 
 export const BookReview = styled('div', {

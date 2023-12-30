@@ -4,11 +4,10 @@ import { keyframes } from '@stitches/react'
 import * as Toast from '@radix-ui/react-toast'
 
 const loadingNewComment = keyframes({
-  '0%': {
-    transform: 'rotate(0)',
+  from: {
+    transform: 'rotate(0deg)',
   },
-
-  '100%': {
+  to: {
     transform: 'rotate(360deg)',
   },
 })
@@ -115,6 +114,18 @@ export const ContentButtons = styled('div', {
   justifyContent: 'flex-end',
   alignItems: 'center',
   gap: '0.5rem',
+
+  variants: {
+    isSubmitting: {
+      true: {
+        'button[type="submit"]': {
+          svg: {
+            animation: `${loadingNewComment} 0.7s infinite linear`,
+          },
+        },
+      },
+    },
+  },
 })
 
 export const ButtonItem = styled('button', {
@@ -143,18 +154,6 @@ export const ButtonItem = styled('button', {
 
   '&:last-child': {
     color: '$green100',
-  },
-
-  variants: {
-    isSubmitting: {
-      true: {
-        'button[type="submit"]': {
-          svg: {
-            animation: `${loadingNewComment} 0.7s infinite linear`,
-          },
-        },
-      },
-    },
   },
 })
 
