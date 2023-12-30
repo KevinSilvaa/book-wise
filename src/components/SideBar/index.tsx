@@ -8,6 +8,9 @@ import {
   LoginInfo,
 } from './styles'
 
+// Components Imports
+import { LoginModal } from '../LoginModal'
+
 // Strategic Imports
 import Image from 'next/image'
 import Link from 'next/link'
@@ -20,7 +23,6 @@ import { Binoculars, ChartLineUp, SignIn, SignOut, User } from 'phosphor-react'
 
 // Image Imports
 import bookWiseLogo from '../../../public/images/logo.png'
-import { LoginModal } from '../LoginModal'
 
 type SideBarProps = {
   open?: boolean

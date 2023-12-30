@@ -1,5 +1,4 @@
 // Styling Imports
-import Image from 'next/image'
 import {
   ItemInfos,
   Separator,
@@ -9,8 +8,13 @@ import {
   UserProfileStatistics,
   UserProfileTextInformations,
 } from './styles'
-import { BookOpen, BookmarkSimple, Books, UserList } from 'phosphor-react'
+
+// Strategic Imports
 import { UserProfileProps } from '@/pages/profile/[user_id]/index.page'
+import Image from 'next/image'
+
+// Icons Imports
+import { BookOpen, BookmarkSimple, Books, UserList } from 'phosphor-react'
 
 // Image Imports
 import avatarPlaceholder from '@/assets/logos/logo-visitante.svg'

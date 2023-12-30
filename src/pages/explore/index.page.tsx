@@ -13,6 +13,7 @@ import {
 // Component Imports
 import { SearchBar } from '@/components/SearchBar'
 import { ExploreBookCard } from '@/components/ExploreBookCard'
+import { BookDetailsModal } from '@/components/BookDetailsModal'
 
 // Strategic Imports
 import { NextPageWithLayout } from '../_app.page'
@@ -27,12 +28,12 @@ import { DefaultLayout } from '@/layouts/DefaultLayout'
 import { useQuery } from '@tanstack/react-query'
 import { Book, Category } from '@prisma/client'
 import { api } from '@/lib/axios'
+import { NextSeo } from 'next-seo'
+import { useRouter } from 'next/router'
 import * as Dialog from '@radix-ui/react-dialog'
 
 // Icons Imports
 import { Binoculars } from 'phosphor-react'
-import { useRouter } from 'next/router'
-import { BookDetailsModal } from '@/components/BookDetailsModal'
 
 export type BookWithAverageRatingProps = Book & {
   bookAlreadyRead: boolean
@@ -108,55 +109,64 @@ const Explore: NextPageWithLayout = () => {
   }, [rated, router])
 
   return (
-    <ExploreContainer>
-      <ExploreHeader>
-        <HeaderTitle>
-          <Binoculars size={32} />
-          <h1>Explorar</h1>
-        </HeaderTitle>
+    <>
+      <NextSeo
+        title="Explorar livros | Book Wise"
+        description="Página da aplicação Book Wise contendo todos os livros que podem ser avaliados."
+      />
 
-        <SearchBar
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setSearch(e.target.value)
-          }
-          value={search}
-          placeholder="Buscar livro ou autor"
-        />
-      </ExploreHeader>
+      <ExploreContainer>
+        <ExploreHeader>
+          <HeaderTitle>
+            <Binoculars size={32} />
+            <h1>Explorar</h1>
+          </HeaderTitle>
 
-      <ExploreContent>
-        <FilterTagsContainer
-          type="single"
-          defaultValue="Tudo"
-          value={categoryValue!}
-          onValueChange={(value) => {
-            value === 'Tudo' ? setCategoryValue(null) : setCategoryValue(value)
-          }}
-        >
-          <FilterTagItem value="Tudo" aria-checked={categoryValue === null}>
-            Tudo
-          </FilterTagItem>
-          {categories?.map((category) => (
-            <FilterTagItem key={category.id} value={category.id}>
-              {category.name}
+          <SearchBar
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setSearch(e.target.value)
+            }
+            value={search}
+            placeholder="Buscar livro ou autor"
+          />
+        </ExploreHeader>
+
+        <ExploreContent>
+          <FilterTagsContainer
+            type="single"
+            defaultValue="Tudo"
+            value={categoryValue!}
+            onValueChange={(value) => {
+              value === 'Tudo'
+                ? setCategoryValue(null)
+                : setCategoryValue(value)
+            }}
+          >
+            <FilterTagItem value="Tudo" aria-checked={categoryValue === null}>
+              Tudo
             </FilterTagItem>
-          ))}
-        </FilterTagsContainer>
+            {categories?.map((category) => (
+              <FilterTagItem key={category.id} value={category.id}>
+                {category.name}
+              </FilterTagItem>
+            ))}
+          </FilterTagsContainer>
 
-        <BooksList>
-          {filteredBooks?.map((book) => (
-            <ExploreBookCard key={book.id} book={book} />
-          ))}
-        </BooksList>
-      </ExploreContent>
-      <Dialog.Root open={modalOpen}>
-        <BookDetailsModal
-          book={book!}
-          open={modalOpen}
-          setModalOpen={setModalOpen}
-        />
-      </Dialog.Root>
-    </ExploreContainer>
+          <BooksList>
+            {filteredBooks?.map((book) => (
+              <ExploreBookCard key={book.id} book={book} />
+            ))}
+          </BooksList>
+        </ExploreContent>
+        <Dialog.Root open={modalOpen}>
+          <BookDetailsModal
+            book={book!}
+            open={modalOpen}
+            setModalOpen={setModalOpen}
+          />
+        </Dialog.Root>
+      </ExploreContainer>
+    </>
   )
 }
 

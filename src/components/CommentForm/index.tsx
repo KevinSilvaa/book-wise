@@ -28,11 +28,11 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { api } from '@/lib/axios'
+import { BookWithAverageRatingProps } from '@/pages/explore/index.page'
 import * as Toast from '@radix-ui/react-toast'
 
 // Icons Imports
 import { Check, CircleNotch, X } from 'phosphor-react'
-import { BookWithAverageRatingProps } from '@/pages/explore/index.page'
 
 const CommentFormBodySchema = z.object({
   rate: z

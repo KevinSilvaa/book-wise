@@ -25,6 +25,7 @@ import {
 // Components Imports
 import { ReviewCard } from '@/components/BookReviewCard'
 import { PopularBookCard } from '@/components/PopularBookCard'
+import { Rating as StarRating } from '@/components/Rating'
 
 // Strategic Imports
 import { DefaultLayout } from '@/layouts/DefaultLayout'
@@ -35,14 +36,14 @@ import Link from 'next/link'
 import { useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { Book, Rating, User } from '@prisma/client'
-import { Rating as StarRating } from '@/components/Rating'
 import { api } from '@/lib/axios'
 import dayjs from 'dayjs'
+import { BookWithAverageRatingProps } from '../explore/index.page'
+import { useRouter } from 'next/router'
+import { NextSeo } from 'next-seo'
 
 // Icons Imports
 import { CaretRight, ChartLineUp } from 'phosphor-react'
-import { BookWithAverageRatingProps } from '../explore/index.page'
-import { useRouter } from 'next/router'
 
 export type RatingWithAuthorAndBook = Rating & {
   user: User
@@ -93,94 +94,101 @@ const Home: NextPageWithLayout = () => {
   })
 
   return (
-    <HomeContainer>
-      <HomeHeader>
-        <ChartLineUp size={32} />
-        <h1>Início</h1>
-      </HomeHeader>
+    <>
+      <NextSeo
+        title="Página principal | Book Wise"
+        description="Página principal da aplicação Book Wise, onde é possível visualizar avaliações de diversos livros"
+      />
 
-      <HomeContent>
-        <MainContent>
-          {userIsAuthenticated && latestUserRating ? (
-            <UserRecommendedBooks>
-              <UserRecommendedBooksHeader>
-                <h3>Sua última leitura</h3>
-                <Link href={`/profile/${session.data.user.id}`}>
-                  <span>Ver todas</span>
+      <HomeContainer>
+        <HomeHeader>
+          <ChartLineUp size={32} />
+          <h1>Início</h1>
+        </HomeHeader>
+
+        <HomeContent>
+          <MainContent>
+            {userIsAuthenticated && latestUserRating ? (
+              <UserRecommendedBooks>
+                <UserRecommendedBooksHeader>
+                  <h3>Sua última leitura</h3>
+                  <Link href={`/profile/${session.data.user.id}`}>
+                    <span>Ver todas</span>
+                    <CaretRight size={16} />
+                  </Link>
+                </UserRecommendedBooksHeader>
+                <RecommendBookCard onClick={handleNavigateExplorePage}>
+                  <Image
+                    src={latestUserRating.book?.cover_url}
+                    alt=""
+                    width={108}
+                    height={152}
+                  />
+
+                  <RecommendBookCardDetails>
+                    <BookTextInformation>
+                      <BookInfos>
+                        <time title="23/12/2023">
+                          {dayjs(latestUserRating.created_at).fromNow()}
+                        </time>
+
+                        <div>
+                          <h3>{latestUserRating?.book.name}</h3>
+                          <span>{latestUserRating?.book.author}</span>
+                        </div>
+                      </BookInfos>
+
+                      <BookRating>
+                        <StarRating
+                          rating={latestUserRating.rate as number}
+                          starSize={16}
+                        />
+                      </BookRating>
+                    </BookTextInformation>
+
+                    <BookSummary>{latestUserRating.book.summary}</BookSummary>
+                  </RecommendBookCardDetails>
+                </RecommendBookCard>
+              </UserRecommendedBooks>
+            ) : null}
+
+            <FeedbacksSection>
+              <FeedbacksSectionHeader>
+                <h3>Avaliações mais recentes</h3>
+              </FeedbacksSectionHeader>
+
+              <FeedbackSectionContent
+                userDontHaveRecentReadBook={userDontHaveRecentReadBooks}
+                userIsNotSignedIn={!session.data?.user.id}
+              >
+                {ratings?.map((rating) => (
+                  <ReviewCard key={rating.id} rating={rating} />
+                ))}
+              </FeedbackSectionContent>
+            </FeedbacksSection>
+          </MainContent>
+
+          <HomeSideContent>
+            <PopularBooksSection>
+              <PopularBooksHeader>
+                <h3>Livros populares</h3>
+
+                <Link href="/explore">
+                  <span>Ver todos</span>
                   <CaretRight size={16} />
                 </Link>
-              </UserRecommendedBooksHeader>
-              <RecommendBookCard onClick={handleNavigateExplorePage}>
-                <Image
-                  src={latestUserRating.book?.cover_url}
-                  alt=""
-                  width={108}
-                  height={152}
-                />
+              </PopularBooksHeader>
 
-                <RecommendBookCardDetails>
-                  <BookTextInformation>
-                    <BookInfos>
-                      <time title="23/12/2023">
-                        {dayjs(latestUserRating.created_at).fromNow()}
-                      </time>
-
-                      <div>
-                        <h3>{latestUserRating?.book.name}</h3>
-                        <span>{latestUserRating?.book.author}</span>
-                      </div>
-                    </BookInfos>
-
-                    <BookRating>
-                      <StarRating
-                        rating={latestUserRating.rate as number}
-                        starSize={16}
-                      />
-                    </BookRating>
-                  </BookTextInformation>
-
-                  <BookSummary>{latestUserRating.book.summary}</BookSummary>
-                </RecommendBookCardDetails>
-              </RecommendBookCard>
-            </UserRecommendedBooks>
-          ) : null}
-
-          <FeedbacksSection>
-            <FeedbacksSectionHeader>
-              <h3>Avaliações mais recentes</h3>
-            </FeedbacksSectionHeader>
-
-            <FeedbackSectionContent
-              userDontHaveRecentReadBook={userDontHaveRecentReadBooks}
-              userIsNotSignedIn={!session.data?.user.id}
-            >
-              {ratings?.map((rating) => (
-                <ReviewCard key={rating.id} rating={rating} />
-              ))}
-            </FeedbackSectionContent>
-          </FeedbacksSection>
-        </MainContent>
-
-        <HomeSideContent>
-          <PopularBooksSection>
-            <PopularBooksHeader>
-              <h3>Livros populares</h3>
-
-              <Link href="/explore">
-                <span>Ver todos</span>
-                <CaretRight size={16} />
-              </Link>
-            </PopularBooksHeader>
-
-            <PopularBooksContent>
-              {popularBooks?.map((book) => (
-                <PopularBookCard key={book.id} book={book} />
-              ))}
-            </PopularBooksContent>
-          </PopularBooksSection>
-        </HomeSideContent>
-      </HomeContent>
-    </HomeContainer>
+              <PopularBooksContent>
+                {popularBooks?.map((book) => (
+                  <PopularBookCard key={book.id} book={book} />
+                ))}
+              </PopularBooksContent>
+            </PopularBooksSection>
+          </HomeSideContent>
+        </HomeContent>
+      </HomeContainer>
+    </>
   )
 }
 

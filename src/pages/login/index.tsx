@@ -16,6 +16,7 @@ import { GetServerSideProps } from 'next'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../api/auth/[...nextauth].api'
 import { useEffect } from 'react'
+import { NextSeo } from 'next-seo'
 
 // Image Imports
 import backgroundImageLogin from '../../../public/images/login-image.png'
@@ -53,50 +54,57 @@ export default function Login() {
   }, [router])
 
   return (
-    <Container>
-      <ImageContainer>
-        <Image src={backgroundImageLogin} alt="" quality={100} priority />
-      </ImageContainer>
+    <>
+      <NextSeo
+        title="Faça login no site | Book Wise"
+        description="Faça login na aplicação Book Wise ou entre como visitante para visualizar as avalições dos livros."
+      />
 
-      <LoginMethods>
-        <MethodsInfo>
-          <h1>Boas vindas!</h1>
-          <span>Faça seu login ou acesse como visitante.</span>
-        </MethodsInfo>
+      <Container>
+        <ImageContainer>
+          <Image src={backgroundImageLogin} alt="" quality={100} priority />
+        </ImageContainer>
 
-        <MethodsButtons>
-          <MethodItem onClick={() => handleSignIn({ provider: 'google' })}>
-            <Image
-              src={logoGoogle}
-              alt="Logo do Google"
-              width={32}
-              height={32}
-            />
-            <span>Entrar com Google</span>
-          </MethodItem>
+        <LoginMethods>
+          <MethodsInfo>
+            <h1>Boas vindas!</h1>
+            <span>Faça seu login ou acesse como visitante.</span>
+          </MethodsInfo>
 
-          <MethodItem onClick={() => handleSignIn({ provider: 'github' })}>
-            <Image
-              src={logoGithub}
-              alt="Logo do Github"
-              width={32}
-              height={32}
-            />
-            <span>Entrar com GitHub</span>
-          </MethodItem>
+          <MethodsButtons>
+            <MethodItem onClick={() => handleSignIn({ provider: 'google' })}>
+              <Image
+                src={logoGoogle}
+                alt="Logo do Google"
+                width={32}
+                height={32}
+              />
+              <span>Entrar com Google</span>
+            </MethodItem>
 
-          <MethodItem onClick={() => handleSignIn({})}>
-            <Image
-              src={logoVisitante}
-              alt="Ícone de um foguete"
-              width={32}
-              height={32}
-            />
-            <span>Acessar como visitante</span>
-          </MethodItem>
-        </MethodsButtons>
-      </LoginMethods>
-    </Container>
+            <MethodItem onClick={() => handleSignIn({ provider: 'github' })}>
+              <Image
+                src={logoGithub}
+                alt="Logo do Github"
+                width={32}
+                height={32}
+              />
+              <span>Entrar com GitHub</span>
+            </MethodItem>
+
+            <MethodItem onClick={() => handleSignIn({})}>
+              <Image
+                src={logoVisitante}
+                alt="Ícone de um foguete"
+                width={32}
+                height={32}
+              />
+              <span>Acessar como visitante</span>
+            </MethodItem>
+          </MethodsButtons>
+        </LoginMethods>
+      </Container>
+    </>
   )
 }
 

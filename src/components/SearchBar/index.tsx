@@ -1,8 +1,6 @@
 // Styling Imports
 import { SearchBarContainer } from './styles'
 
-// Strategic Imports
-
 // Icons Imports
 import { MagnifyingGlass } from 'phosphor-react'
 

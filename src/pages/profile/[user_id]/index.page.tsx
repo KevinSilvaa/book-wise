@@ -21,13 +21,14 @@ import {
 import { DefaultLayout } from '@/layouts/DefaultLayout'
 import { NextPageWithLayout } from '@/pages/_app.page'
 import { ChangeEvent, ReactElement, useState } from 'react'
-
-// Icons Imports
-import { CaretLeft, User } from 'phosphor-react'
 import { useRouter } from 'next/router'
 import { useQuery } from '@tanstack/react-query'
 import { api } from '@/lib/axios'
 import { useSession } from 'next-auth/react'
+import { NextSeo } from 'next-seo'
+
+// Icons Imports
+import { CaretLeft, User } from 'phosphor-react'
 
 export type UserProfileProps = {
   ratings: UserProfileRatingsProps[]
@@ -72,53 +73,60 @@ const Profile: NextPageWithLayout = () => {
   })
 
   return (
-    <ProfileContainer>
-      {isOwnProfile ? (
-        <ProfileHeader>
-          <User size={32} />
-          <h1>Perfil</h1>
-        </ProfileHeader>
-      ) : (
-        <ProfileHeader isOwnProfile>
-          <button onClick={handleNavigateBack}>
-            <CaretLeft size={20} />
-            <span>Voltar</span>
-          </button>
-        </ProfileHeader>
-      )}
+    <>
+      <NextSeo
+        title={`Perfil de ${session.data?.user.name} | Book Wise`}
+        description={`Perfil de ${session.data?.user.name} da aplicação Book Wise, contendo avaliações de vários livros e muito mais.`}
+      />
 
-      <ProfileContent>
-        <MainContent>
-          <SearchBar
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setSearch(e.target.value)
-            }
-            value={search}
-            placeholder="Buscar livro avaliado"
-          />
+      <ProfileContainer>
+        {isOwnProfile ? (
+          <ProfileHeader>
+            <User size={32} />
+            <h1>Perfil</h1>
+          </ProfileHeader>
+        ) : (
+          <ProfileHeader isOwnProfile>
+            <button onClick={handleNavigateBack}>
+              <CaretLeft size={20} />
+              <span>Voltar</span>
+            </button>
+          </ProfileHeader>
+        )}
 
-          <BooksReviewContent>
-            {filteredRatings?.map((rating) => (
-              <ProfileReviewCard
-                key={`${userProfile?.user.name}-${rating.book.id}`}
-                rating={rating}
-              />
-            ))}
-            {filteredRatings?.length === 0 && (
-              <h3>
-                {search
-                  ? 'Nenhum resultado encontrado'
-                  : 'Nenhuma avaliação deste usuário foi encontrada'}
-              </h3>
-            )}
-          </BooksReviewContent>
-        </MainContent>
+        <ProfileContent>
+          <MainContent>
+            <SearchBar
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setSearch(e.target.value)
+              }
+              value={search}
+              placeholder="Buscar livro avaliado"
+            />
 
-        <ProfileInfo>
-          <UserProfile profile={userProfile!} />
-        </ProfileInfo>
-      </ProfileContent>
-    </ProfileContainer>
+            <BooksReviewContent>
+              {filteredRatings?.map((rating) => (
+                <ProfileReviewCard
+                  key={`${userProfile?.user.name}-${rating.book.id}`}
+                  rating={rating}
+                />
+              ))}
+              {filteredRatings?.length === 0 && (
+                <h3>
+                  {search
+                    ? 'Nenhum resultado encontrado'
+                    : 'Nenhuma avaliação deste usuário foi encontrada'}
+                </h3>
+              )}
+            </BooksReviewContent>
+          </MainContent>
+
+          <ProfileInfo>
+            <UserProfile profile={userProfile!} />
+          </ProfileInfo>
+        </ProfileContent>
+      </ProfileContainer>
+    </>
   )
 }
 

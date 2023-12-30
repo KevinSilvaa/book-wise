@@ -9,11 +9,11 @@ import { BookDetailsRoot, BookDetailsTrigger } from '../BookDetailsModal/styles'
 
 // Components Imports
 import { Rating as StarRating } from '../Rating'
+import { BookDetailsModal } from '../BookDetailsModal'
 
 // Strategic Imports
 import Image from 'next/image'
 import { BookWithAverageRatingProps } from '@/pages/explore/index.page'
-import { BookDetailsModal } from '../BookDetailsModal'
 import { useState } from 'react'
 
 type ExploreBookCardProps = {

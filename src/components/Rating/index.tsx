@@ -1,7 +1,12 @@
+// Styling Imports
 import { RatingComponent } from './styles'
+
+// Components Imports
 import { VariantProps } from '@stitches/react'
-import { Star } from 'phosphor-react'
 import { useState } from 'react'
+
+// Icons Imports
+import { Star } from 'phosphor-react'
 
 interface RatingProps extends VariantProps<typeof RatingComponent> {
   starSize: number

@@ -2,11 +2,13 @@
 import { CardContent, CardTitle, CardContainer } from './styles'
 import { BookRating } from '@/pages/home/styles'
 
+// Components Imports
+import { Rating as StarRating } from '../Rating'
+
 // Strategic Imports
 import Image from 'next/image'
 import { BookWithAverageRatingProps } from '@/pages/explore/index.page'
 import { VariantProps } from '@stitches/react'
-import { Rating as StarRating } from '../Rating'
 import { useRouter } from 'next/router'
 
 interface PopularBookCardProps extends VariantProps<typeof CardContainer> {
