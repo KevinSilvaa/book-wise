@@ -41,7 +41,7 @@ export default function App({
           openGraph={{
             type: 'website',
             locale: 'pt_BR',
-            url: 'http://localhost:3000',
+            url: 'https://book-wise-kevinsilvaa.vercel.app',
             siteName: 'Book Wise',
           }}
         />
