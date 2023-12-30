@@ -89,8 +89,6 @@ const Explore: NextPageWithLayout = () => {
 
   const latestBookId = String(router.query.bookId)
 
-  router.replace('/explore', undefined, { shallow: true })
-
   const rated = useCallback(
     function bookRecentlyRated() {
       if (books?.find((book) => book.id === latestBookId)) {
@@ -105,8 +103,9 @@ const Explore: NextPageWithLayout = () => {
     if (rated()) {
       const bookRated = rated()
       setBook(bookRated!)
+      router.replace('/explore', undefined, { shallow: true })
     }
-  }, [rated])
+  }, [rated, router])
 
   return (
     <ExploreContainer>
