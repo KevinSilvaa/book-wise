@@ -115,6 +115,14 @@ export const ContentButtons = styled('div', {
   alignItems: 'center',
   gap: '0.5rem',
 
+  'button:first-child': {
+    color: '$purple100',
+  },
+
+  'button[type="submit"]': {
+    color: '$green100',
+  },
+
   variants: {
     isSubmitting: {
       true: {
@@ -146,14 +154,6 @@ export const ButtonItem = styled('button', {
 
   '&:not(:disabled):hover': {
     backgroundColor: '$gray500',
-  },
-
-  '&:first-child': {
-    color: '$purple100',
-  },
-
-  '&:last-child': {
-    color: '$green100',
   },
 })
 
