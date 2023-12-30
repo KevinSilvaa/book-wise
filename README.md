@@ -29,7 +29,7 @@ utilizado o Google ou o Github, assim, facilitando o fluxo de autenticação.
 - `Axios`; Utilizado para fazer requisições para *API*.
 - `Next.js`: Uma Framework do React utilizada para estruturação das páginas com ainda mais performance e muitas outras vantagens.
 
-  - `Next Auth`; Utilizado para fazer a conexão com o sistema de autenticação do Google dentro da aplicação.
+  - `Next Auth`; Utilizado para fazer a conexão com o sistema de autenticação do Google e Github dentro da aplicação.
   - `Next Seo`; Utlizado para melhorar a indexação e o posicionamento da aplicação nos navegadores.
   - `Radix UI`; Utilizado para reaproveitar componentes que seguem todas as regras de acessibilidade e podem ser totalmente estilizados.
   - `Stitches`; Utilizado para a estilização das páginas dentro do JavaScript (CSS-in-JS).
