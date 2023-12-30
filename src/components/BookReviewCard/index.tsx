@@ -14,10 +14,7 @@ import { BookRating } from '@/pages/home/styles'
 import { Rating as StarRatings } from '@/components/Rating'
 
 // Strategic Imports
-import { useRouter } from 'next/router'
 import Image from 'next/image'
-
-// Image Imports
 import { RatingWithAuthorAndBook } from '@/pages/home/index.page'
 import dayjs from '@/lib/dayjs'
 import { DateFormatter } from '@/utils/formatter'
@@ -27,12 +24,6 @@ interface ReviewCardProps {
 }
 
 export function ReviewCard({ rating }: ReviewCardProps) {
-  const router = useRouter()
-
-  function handleNavigateToReview() {
-    router.push(`/review/iasdiashjdioas213sadoa`)
-  }
-
   return (
     <RecentReviewCard>
       <RecentReviewCardHeader>
@@ -52,7 +43,7 @@ export function ReviewCard({ rating }: ReviewCardProps) {
         </BookRating>
       </RecentReviewCardHeader>
 
-      <RecentReviewCardContent onClick={handleNavigateToReview}>
+      <RecentReviewCardContent>
         <Image src={rating.book.cover_url} alt="" width={108} height={152} />
 
         <BookReview>
